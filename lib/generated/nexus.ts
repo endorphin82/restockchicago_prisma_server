@@ -82,6 +82,7 @@ export interface NexusGenFieldTypes {
     description: string | null; // String
     icon: string; // String!
     id: number; // Int!
+    images: NexusGenRootTypes['ImageCat'][]; // [ImageCat!]!
     name: string; // String!
     parent: number | null; // Int
     products: NexusGenRootTypes['Product'][]; // [Product!]!
@@ -115,11 +116,15 @@ export interface NexusGenFieldTypes {
     product: NexusGenRootTypes['Product'] | null; // Product
     productByName: NexusGenRootTypes['Product']; // Product!
     products: NexusGenRootTypes['Product'][]; // [Product!]!
+    productsByNameAndCategoriesId: NexusGenRootTypes['Product']; // Product!
   }
 }
 
 export interface NexusGenArgTypes {
   Category: {
+    images: { // args
+      skip?: number | null; // Int
+    }
     products: { // args
       skip?: number | null; // Int
     }
@@ -147,6 +152,10 @@ export interface NexusGenArgTypes {
     }
     products: { // args
       skip?: number | null; // Int
+    }
+    productsByNameAndCategoriesId: { // args
+      category?: number | null; // Int
+      name?: string | null; // String
     }
   }
 }

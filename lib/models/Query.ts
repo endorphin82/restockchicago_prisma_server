@@ -1,4 +1,4 @@
-import { objectType, stringArg } from '@nexus/schema'
+import { objectType, stringArg, intArg } from '@nexus/schema'
 
 export const Query = objectType({
   name: 'Query',
@@ -48,6 +48,22 @@ export const Query = objectType({
             return result
           })
       }
+    })
+
+    t.field("productsByNameAndCategoriesId", {
+      type: "Product",
+      args: {
+        name: stringArg(),
+        category: intArg()
+      },
+resolve(_root, args, ctx){
+  return ctx.prisma.product.findMany({where:{
+    name: {
+      contains: args.name
+    },
+    category: args.category 
+  }})
+}
     })
   }
 })

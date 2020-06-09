@@ -6,6 +6,7 @@ type Category {
   description: String
   icon: String!
   id: Int!
+  images(skip: Int): [ImageCat!]!
   name: String!
   parent: Int
   products(skip: Int): [Product!]!
@@ -58,4 +59,5 @@ type Query {
   product(where: ProductWhereUniqueInput!): Product
   productByName(name: String!): Product!
   products(skip: Int): [Product!]!
+  productsByNameAndCategoriesId(category: Int, name: String): Product!
 }
