@@ -1,0 +1,37 @@
+{
+  "name": "restockchicago_prisma_server",
+  "version": "1.0.0",
+  "description": "",
+  "dependencies": {
+    "@nexus/schema": "^0.14.0",
+    "@prisma/client": "^2.0.0-beta.9",
+    "apollo-server": "^2.14.3",
+    "nexus": "^0.23.0",
+    "nexus-prisma": "^0.14.0"
+  },
+  "devDependencies": {
+    "@prisma/cli": "^2.0.0-beta.9",
+    "@types/node": "^14.0.12",
+    "ts-node": "^8.10.2",
+    "ts-node-dev": "^1.0.0-pre.44",
+    "typescript": "^3.9.5"
+  },
+  "scripts": {
+    "dev": "PORT=3005 ts-node-dev src/index.ts",
+    "generate:prisma": "prisma generate",
+    "generate:nexus": "NODE_ENV=development ts-node --transpile-only -P nexus.tsconfig.json lib/schema",
+    "migration_save:prisma": "prisma migrate save --experimental",
+    "migration_UP:prisma": "prisma migrate up --experimental"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/endorphin82/restockchicago_prisma_server.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/endorphin82/restockchicago_prisma_server/issues"
+  },
+  "homepage": "https://github.com/endorphin82/restockchicago_prisma_server#readme"
+}
