@@ -20,7 +20,7 @@ export const Query = objectType({
               name: args.name
             }
           })
-          .then(result => {
+          .then((result: any) => {
             if (result === null) {
               throw new Error(`No blog with id of "${args.name}"`)
             }
@@ -41,7 +41,7 @@ export const Query = objectType({
               name: args.name
             }
           })
-          .then(result => {
+          .then((result: any) => {
             if (result === null) {
               throw new Error(`No blog with id of "${args.name}"`)
             }
@@ -50,20 +50,20 @@ export const Query = objectType({
       }
     })
 
-    t.field("productsByNameAndCategoriesId", {
-      type: "Product",
+    t.field('productsByNameAndCategoryId', {
+      type: 'Product',
+      list: true,
       args: {
-        name: stringArg(),
-        category: intArg()
+        name: stringArg({ required: true }),
+        category_id: intArg({ required: true })
       },
-resolve(_root, args, ctx){
-  return ctx.prisma.product.findMany({where:{
-    name: {
-      contains: args.name
-    },
-    category: args.category 
-  }})
-}
+      resolve(_root, args, ctx) {
+
+        return ctx.prisma
+          .category
+          .findOne({ where: { id: Number(args.category_id) } })
+          .products({ where: { name: { contains: String(args.name) } } })
+      }
     })
   }
 })
