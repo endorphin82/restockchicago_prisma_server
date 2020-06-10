@@ -448,6 +448,7 @@ type Query {
   product(where: ProductWhereUniqueInput!): Product
   productByName(name: String!): Product!
   products(skip: Int): [Product!]!
+  productsByCategoryId(category_id: Int!): [Product!]!
   productsByNameAndCategoryId(category_id: Int!, name: String!): [Product!]!
 }
 

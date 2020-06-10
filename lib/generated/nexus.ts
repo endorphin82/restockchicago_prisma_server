@@ -519,6 +519,7 @@ export interface NexusGenFieldTypes {
     product: NexusGenRootTypes['Product'] | null; // Product
     productByName: NexusGenRootTypes['Product']; // Product!
     products: NexusGenRootTypes['Product'][]; // [Product!]!
+    productsByCategoryId: NexusGenRootTypes['Product'][]; // [Product!]!
     productsByNameAndCategoryId: NexusGenRootTypes['Product'][]; // [Product!]!
   }
 }
@@ -577,6 +578,9 @@ export interface NexusGenArgTypes {
     }
     products: { // args
       skip?: number | null; // Int
+    }
+    productsByCategoryId: { // args
+      category_id: number; // Int!
     }
     productsByNameAndCategoryId: { // args
       category_id: number; // Int!

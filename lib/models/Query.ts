@@ -65,5 +65,19 @@ export const Query = objectType({
           .products({ where: { name: { contains: String(args.name) } } })
       }
     })
+
+    t.field('productsByCategoryId', {
+      type: 'Product',
+      list: true,
+      args: {
+        category_id: intArg({ required: true })
+      },
+      resolve(_root, args, ctx) {
+        return ctx.prisma
+          .category
+          .findOne({ where: { id: Number(args.category_id) } })
+          .products()
+      }
+    })
   }
 })
