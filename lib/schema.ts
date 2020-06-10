@@ -5,9 +5,10 @@ import { Product } from './models/Product'
 import { Category } from './models/Category'
 import { ImageCat } from './models/ImageCat'
 import { ImageProd } from './models/ImageProd'
+import { Mutation } from './models/Mutation'
 
 export const schema = makeSchema({
-  types: [Query, Product, Category, ImageProd, ImageCat],
+  types: [Query, Mutation, Product, Category, ImageProd, ImageCat],
   plugins: [nexusPrismaPlugin()],
   outputs: {
     schema: __dirname + '/../schema.graphql',
