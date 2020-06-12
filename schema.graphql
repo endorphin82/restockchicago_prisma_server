@@ -2,6 +2,10 @@
 ### Do not make changes to this file directly
 
 
+type BatchPayload {
+  count: Int!
+}
+
 type Category {
   description: String
   icon: String!
@@ -23,9 +27,23 @@ input CategoryCreateInput {
   url: String!
 }
 
+input CategoryCreateOneWithoutImagesInput {
+  connect: CategoryWhereUniqueInput
+  create: CategoryCreateWithoutImagesInput
+}
+
 input CategoryCreateOneWithoutProductsInput {
   connect: CategoryWhereUniqueInput
   create: CategoryCreateWithoutProductsInput
+}
+
+input CategoryCreateWithoutImagesInput {
+  description: String
+  icon: String!
+  name: String!
+  parent: Int
+  products: ProductCreateManyWithoutCategoryInput
+  url: String!
 }
 
 input CategoryCreateWithoutProductsInput {
@@ -35,6 +53,15 @@ input CategoryCreateWithoutProductsInput {
   name: String!
   parent: Int
   url: String!
+}
+
+input CategoryOrderByInput {
+  description: OrderByArg
+  icon: OrderByArg
+  id: OrderByArg
+  name: OrderByArg
+  parent: OrderByArg
+  url: OrderByArg
 }
 
 input CategoryUpdateInput {
@@ -48,6 +75,24 @@ input CategoryUpdateInput {
   url: String
 }
 
+input CategoryUpdateManyMutationInput {
+  description: String
+  icon: String
+  id: Int
+  name: String
+  parent: Int
+  url: String
+}
+
+input CategoryUpdateOneWithoutImagesInput {
+  connect: CategoryWhereUniqueInput
+  create: CategoryCreateWithoutImagesInput
+  delete: Boolean
+  disconnect: Boolean
+  update: CategoryUpdateWithoutImagesDataInput
+  upsert: CategoryUpsertWithoutImagesInput
+}
+
 input CategoryUpdateOneWithoutProductsInput {
   connect: CategoryWhereUniqueInput
   create: CategoryCreateWithoutProductsInput
@@ -55,6 +100,16 @@ input CategoryUpdateOneWithoutProductsInput {
   disconnect: Boolean
   update: CategoryUpdateWithoutProductsDataInput
   upsert: CategoryUpsertWithoutProductsInput
+}
+
+input CategoryUpdateWithoutImagesDataInput {
+  description: String
+  icon: String
+  id: Int
+  name: String
+  parent: Int
+  products: ProductUpdateManyWithoutCategoryInput
+  url: String
 }
 
 input CategoryUpdateWithoutProductsDataInput {
@@ -65,6 +120,11 @@ input CategoryUpdateWithoutProductsDataInput {
   name: String
   parent: Int
   url: String
+}
+
+input CategoryUpsertWithoutImagesInput {
+  create: CategoryCreateWithoutImagesInput!
+  update: CategoryUpdateWithoutImagesDataInput!
 }
 
 input CategoryUpsertWithoutProductsInput {
@@ -98,6 +158,11 @@ type ImageCat {
   url: String!
 }
 
+input ImageCatCreateInput {
+  category: CategoryCreateOneWithoutImagesInput
+  url: String!
+}
+
 input ImageCatCreateManyWithoutCategoryInput {
   connect: [ImageCatWhereUniqueInput!]
   create: [ImageCatCreateWithoutCategoryInput!]
@@ -113,6 +178,12 @@ input ImageCatFilter {
   some: ImageCatWhereInput
 }
 
+input ImageCatOrderByInput {
+  category_id: OrderByArg
+  id: OrderByArg
+  url: OrderByArg
+}
+
 input ImageCatScalarWhereInput {
   AND: [ImageCatScalarWhereInput!]
   category_id: NullableIntFilter
@@ -122,7 +193,18 @@ input ImageCatScalarWhereInput {
   url: StringFilter
 }
 
+input ImageCatUpdateInput {
+  category: CategoryUpdateOneWithoutImagesInput
+  id: Int
+  url: String
+}
+
 input ImageCatUpdateManyDataInput {
+  id: Int
+  url: String
+}
+
+input ImageCatUpdateManyMutationInput {
   id: Int
   url: String
 }
@@ -182,6 +264,11 @@ type ImageProd {
   url: String!
 }
 
+input ImageProdCreateInput {
+  product: ProductCreateOneWithoutImagesInput
+  url: String!
+}
+
 input ImageProdCreateManyWithoutProductInput {
   connect: [ImageProdWhereUniqueInput!]
   create: [ImageProdCreateWithoutProductInput!]
@@ -197,6 +284,12 @@ input ImageProdFilter {
   some: ImageProdWhereInput
 }
 
+input ImageProdOrderByInput {
+  id: OrderByArg
+  product_id: OrderByArg
+  url: OrderByArg
+}
+
 input ImageProdScalarWhereInput {
   AND: [ImageProdScalarWhereInput!]
   id: IntFilter
@@ -206,7 +299,18 @@ input ImageProdScalarWhereInput {
   url: StringFilter
 }
 
+input ImageProdUpdateInput {
+  id: Int
+  product: ProductUpdateOneWithoutImagesInput
+  url: String
+}
+
 input ImageProdUpdateManyDataInput {
+  id: Int
+  url: String
+}
+
+input ImageProdUpdateManyMutationInput {
   id: Int
   url: String
 }
@@ -272,11 +376,29 @@ input IntFilter {
 
 type Mutation {
   createOneCategory(data: CategoryCreateInput!): Category!
+  createOneImageCat(data: ImageCatCreateInput!): ImageCat!
+  createOneImageProd(data: ImageProdCreateInput!): ImageProd!
   createOneProduct(data: ProductCreateInput!): Product!
+  deleteManyCategory(where: CategoryWhereInput): BatchPayload!
+  deleteManyImageCat(where: ImageCatWhereInput): BatchPayload!
+  deleteManyImageProd(where: ImageProdWhereInput): BatchPayload!
+  deleteManyProduct(where: ProductWhereInput): BatchPayload!
   deleteOneCategory(where: CategoryWhereUniqueInput!): Category
+  deleteOneImageCat(where: ImageCatWhereUniqueInput!): ImageCat
+  deleteOneImageProd(where: ImageProdWhereUniqueInput!): ImageProd
   deleteOneProduct(where: ProductWhereUniqueInput!): Product
+  updateManyCategory(data: CategoryUpdateManyMutationInput!, where: CategoryWhereInput): BatchPayload!
+  updateManyImageCat(data: ImageCatUpdateManyMutationInput!, where: ImageCatWhereInput): BatchPayload!
+  updateManyImageProd(data: ImageProdUpdateManyMutationInput!, where: ImageProdWhereInput): BatchPayload!
+  updateManyProduct(data: ProductUpdateManyMutationInput!, where: ProductWhereInput): BatchPayload!
   updateOneCategory(data: CategoryUpdateInput!, where: CategoryWhereUniqueInput!): Category
+  updateOneImageCat(data: ImageCatUpdateInput!, where: ImageCatWhereUniqueInput!): ImageCat
+  updateOneImageProd(data: ImageProdUpdateInput!, where: ImageProdWhereUniqueInput!): ImageProd
   updateOneProduct(data: ProductUpdateInput!, where: ProductWhereUniqueInput!): Product
+  upsertOneCategory(create: CategoryCreateInput!, update: CategoryUpdateInput!, where: CategoryWhereUniqueInput!): Category!
+  upsertOneImageCat(create: ImageCatCreateInput!, update: ImageCatUpdateInput!, where: ImageCatWhereUniqueInput!): ImageCat!
+  upsertOneImageProd(create: ImageProdCreateInput!, update: ImageProdUpdateInput!, where: ImageProdWhereUniqueInput!): ImageProd!
+  upsertOneProduct(create: ProductCreateInput!, update: ProductUpdateInput!, where: ProductWhereUniqueInput!): Product!
 }
 
 input NullableIntFilter {
@@ -302,6 +424,11 @@ input NullableStringFilter {
   not: String
   notIn: [String!]
   startsWith: String
+}
+
+enum OrderByArg {
+  asc
+  desc
 }
 
 type Product {
@@ -331,6 +458,11 @@ input ProductCreateManyWithoutCategoryInput {
   create: [ProductCreateWithoutCategoryInput!]
 }
 
+input ProductCreateOneWithoutImagesInput {
+  connect: ProductWhereUniqueInput
+  create: ProductCreateWithoutImagesInput
+}
+
 input ProductCreateWithoutCategoryInput {
   description: String
   icon: String!
@@ -340,10 +472,29 @@ input ProductCreateWithoutCategoryInput {
   url: String!
 }
 
+input ProductCreateWithoutImagesInput {
+  category: CategoryCreateOneWithoutProductsInput
+  description: String
+  icon: String!
+  name: String!
+  price: Int!
+  url: String!
+}
+
 input ProductFilter {
   every: ProductWhereInput
   none: ProductWhereInput
   some: ProductWhereInput
+}
+
+input ProductOrderByInput {
+  category_id: OrderByArg
+  description: OrderByArg
+  icon: OrderByArg
+  id: OrderByArg
+  name: OrderByArg
+  price: OrderByArg
+  url: OrderByArg
 }
 
 input ProductScalarWhereInput {
@@ -380,6 +531,15 @@ input ProductUpdateManyDataInput {
   url: String
 }
 
+input ProductUpdateManyMutationInput {
+  description: String
+  icon: String
+  id: Int
+  name: String
+  price: Int
+  url: String
+}
+
 input ProductUpdateManyWithoutCategoryInput {
   connect: [ProductWhereUniqueInput!]
   create: [ProductCreateWithoutCategoryInput!]
@@ -397,6 +557,15 @@ input ProductUpdateManyWithWhereNestedInput {
   where: ProductScalarWhereInput!
 }
 
+input ProductUpdateOneWithoutImagesInput {
+  connect: ProductWhereUniqueInput
+  create: ProductCreateWithoutImagesInput
+  delete: Boolean
+  disconnect: Boolean
+  update: ProductUpdateWithoutImagesDataInput
+  upsert: ProductUpsertWithoutImagesInput
+}
+
 input ProductUpdateWithoutCategoryDataInput {
   description: String
   icon: String
@@ -407,9 +576,24 @@ input ProductUpdateWithoutCategoryDataInput {
   url: String
 }
 
+input ProductUpdateWithoutImagesDataInput {
+  category: CategoryUpdateOneWithoutProductsInput
+  description: String
+  icon: String
+  id: Int
+  name: String
+  price: Int
+  url: String
+}
+
 input ProductUpdateWithWhereUniqueWithoutCategoryInput {
   data: ProductUpdateWithoutCategoryDataInput!
   where: ProductWhereUniqueInput!
+}
+
+input ProductUpsertWithoutImagesInput {
+  create: ProductCreateWithoutImagesInput!
+  update: ProductUpdateWithoutImagesDataInput!
 }
 
 input ProductUpsertWithWhereUniqueWithoutCategoryInput {
@@ -442,14 +626,22 @@ input ProductWhereUniqueInput {
 }
 
 type Query {
-  categories(skip: Int): [Category!]!
+  categories(orderBy: CategoryOrderByInput, skip: Int, where: CategoryWhereInput): [Category!]!
+  categoriesCount(after: CategoryWhereUniqueInput, before: CategoryWhereUniqueInput, first: Int, last: Int, orderBy: CategoryOrderByInput, skip: Int, where: CategoryWhereInput): Int!
   category(where: CategoryWhereUniqueInput!): Category
   categoryByName(name: String!): Category!
+  imageCat(where: ImageCatWhereUniqueInput!): ImageCat
+  imageCats(orderBy: ImageCatOrderByInput, skip: Int, where: ImageCatWhereInput): [ImageCat!]!
+  imageCatsCount(after: ImageCatWhereUniqueInput, before: ImageCatWhereUniqueInput, first: Int, last: Int, orderBy: ImageCatOrderByInput, skip: Int, where: ImageCatWhereInput): Int!
+  imageProd(where: ImageProdWhereUniqueInput!): ImageProd
+  imageProds(orderBy: ImageProdOrderByInput, skip: Int, where: ImageProdWhereInput): [ImageProd!]!
+  imageProdsCount(after: ImageProdWhereUniqueInput, before: ImageProdWhereUniqueInput, first: Int, last: Int, orderBy: ImageProdOrderByInput, skip: Int, where: ImageProdWhereInput): Int!
   product(where: ProductWhereUniqueInput!): Product
   productByName(name: String!): Product!
-  products(skip: Int): [Product!]!
+  products(orderBy: ProductOrderByInput, skip: Int, where: ProductWhereInput): [Product!]!
   productsByCategoryId(category_id: Int!): [Product!]!
   productsByNameAndCategoryId(category_id: Int!, name: String!): [Product!]!
+  productsCount(after: ProductWhereUniqueInput, before: ProductWhereUniqueInput, first: Int, last: Int, orderBy: ProductOrderByInput, skip: Int, where: ProductWhereInput): Int!
 }
 
 input StringFilter {
