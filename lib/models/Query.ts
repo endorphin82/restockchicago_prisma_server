@@ -7,6 +7,12 @@ export const Query = objectType({
     t.crud.categories()
     t.crud.product()
     t.crud.products()
+// t.field('categoriesConnection',{
+//   type: intArg(),
+//   resolve(root, args, ctx){
+//     return ctx.prisma.category.findMany({}).
+//   }
+// })
 
     t.field('productByName', {
       type: 'Product',

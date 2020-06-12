@@ -5,9 +5,12 @@
   "dependencies": {
     "@nexus/schema": "^0.14.0",
     "@prisma/client": "^2.0.0",
+    "@ra-data-prisma/backend": "^1.2.1",
     "apollo-server": "^2.14.3",
+    "lodash": "^4.17.15",
     "nexus": "^0.23.0",
-    "nexus-prisma": "^0.14.0"
+    "nexus-prisma": "^0.14.0",
+    "pluralize": "^8.0.0"
   },
   "devDependencies": {
     "@prisma/cli": "^2.0.0",
@@ -21,7 +24,8 @@
     "generate:prisma": "prisma generate",
     "generate:nexus": "NODE_ENV=development ts-node --transpile-only -P nexus.tsconfig.json lib/schema",
     "migration_save:prisma": "prisma migrate save --experimental",
-    "migration_UP:prisma": "prisma migrate up --experimental"
+    "migration_UP:prisma": "prisma migrate up --experimental",
+    "studio": "npx prisma studio --experimental"
   },
   "repository": {
     "type": "git",
