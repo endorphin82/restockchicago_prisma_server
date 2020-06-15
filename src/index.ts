@@ -5,28 +5,29 @@ import { ApolloServer } from 'apollo-server'
 const myPlugin = {
 
   // Fires whenever a GraphQL request is received from a client.
-  requestDidStart(requestContext) {
+  requestDidStart(requestContext: any) {
     console.log('Request started! Query:\n' +
-      requestContext.request.query);
+      requestContext.request.query)
 
     return {
 
       // Fires whenever Apollo Server will parse a GraphQL
       // request to create its associated document AST.
-      parsingDidStart(requestContext) {
-        console.log('Parsing started!');
+      parsingDidStart(requestContext: any) {
+        console.log('Parsing started!')
       }
 
       // Fires whenever Apollo Server will validate a
       // request's document AST against your GraphQL schema.
-
-
     }
-  },
-};
-new ApolloServer({ schema, context: createContext,  plugins: [
-  myPlugin
-] }).listen(
+  }
+}
+
+new ApolloServer({
+  schema, context: createContext, plugins: [
+    myPlugin
+  ]
+}).listen(
   { port: process.env.PORT },
   () =>
     console.log(

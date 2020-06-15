@@ -541,7 +541,6 @@ export interface NexusGenRootTypes {
   }
   Mutation: {};
   Product: { // root type
-    category_id?: number | null; // Int
     description?: string | null; // String
     icon: string; // String!
     id: number; // Int!
@@ -686,7 +685,6 @@ export interface NexusGenFieldTypes {
   }
   Product: { // field return type
     category: NexusGenRootTypes['Category'] | null; // Category
-    category_id: number | null; // Int
     description: string | null; // String
     icon: string; // String!
     id: number; // Int!

@@ -9,9 +9,8 @@ export const Product = objectType({
     t.model.url()
     t.model.description()
     t.model.icon()
-    t.model.category_id()
+    // t.model.category_id()
     t.model.price()
-    // @ts-ignore
     t.model.images()
   }
 })
