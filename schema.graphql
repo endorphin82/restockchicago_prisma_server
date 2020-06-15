@@ -433,7 +433,6 @@ enum OrderByArg {
 
 type Product {
   category: Category
-  category_id: Int
   description: String
   icon: String!
   id: Int!
