@@ -5,5 +5,7 @@ export const ImageCat = objectType({
     definition(t) {
         t.model.id()
         t.model.url()
+        t.model.category()
+        t.model.category_id()
     }
 })
