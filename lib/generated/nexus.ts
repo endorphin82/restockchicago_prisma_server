@@ -531,6 +531,7 @@ export interface NexusGenRootTypes {
     url: string; // String!
   }
   ImageCat: { // root type
+    category_id?: number | null; // Int
     id: number; // Int!
     url: string; // String!
   }
@@ -541,6 +542,7 @@ export interface NexusGenRootTypes {
   }
   Mutation: {};
   Product: { // root type
+    category_id?: number | null; // Int
     description?: string | null; // String
     icon: string; // String!
     id: number; // Int!
@@ -648,6 +650,8 @@ export interface NexusGenFieldTypes {
     url: string; // String!
   }
   ImageCat: { // field return type
+    category: NexusGenRootTypes['Category'] | null; // Category
+    category_id: number | null; // Int
     id: number; // Int!
     url: string; // String!
   }
@@ -685,6 +689,7 @@ export interface NexusGenFieldTypes {
   }
   Product: { // field return type
     category: NexusGenRootTypes['Category'] | null; // Category
+    category_id: number | null; // Int
     description: string | null; // String
     icon: string; // String!
     id: number; // Int!
