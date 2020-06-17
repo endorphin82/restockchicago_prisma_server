@@ -1,9 +1,17 @@
+import express from 'express'
 import { schema } from '../lib/schema'
 import { createContext } from '../prisma/context'
-import { ApolloServer } from 'apollo-server'
+import { ApolloServer, gql } from 'apollo-server-express'
 
-const myPlugin = {
+const path = '/';
+const app = express();
 
+const midLogger = (req: any, res: any, next: any) => {
+  console.log("Hello from logger\n");
+  next();
+};
+
+const plugLogger = {
   // Fires whenever a GraphQL request is received from a client.
   requestDidStart(requestContext: any) {
     console.log('Request started! Query:\n' +
@@ -22,15 +30,32 @@ const myPlugin = {
     }
   }
 }
-
-new ApolloServer({
+const server = new ApolloServer({
   schema, context: createContext, plugins: [
-    myPlugin
+    plugLogger
   ]
-}).listen(
+})
+
+app.use(path, midLogger);
+// @ts-ignore
+server.applyMiddleware({ app, path })
+
+app.listen(
   { port: process.env.PORT },
   () =>
     console.log(
-      `🚀 Server ready at: http://localhost:${process.env.PORT}\n⭐️ See sample queries: http://pris.ly/e/js/graphql-apollo-server#using-the-graphql-api`
+      `🚀 Server ready at: http://localhost:${process.env.PORT}${server.graphqlPath}\n⭐️ See sample queries: http://pris.ly/e/js/graphql-apollo-server#using-the-graphql-api`
     )
 )
+
+// new ApolloServer({
+//   schema, context: createContext, plugins: [
+//     myPlugin
+//   ]
+// }).listen(
+//   { port: process.env.PORT },
+//   () =>
+//     console.log(
+//       `🚀 Server ready at: http://localhost:${process.env.PORT}\n⭐️ See sample queries: http://pris.ly/e/js/graphql-apollo-server#using-the-graphql-api`
+//     )
+// )
