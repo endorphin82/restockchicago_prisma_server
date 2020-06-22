@@ -4,9 +4,17 @@
  */
 
 import * as Context from "../../prisma/context"
-
-
-
+import { core } from "@nexus/schema"
+declare global {
+  interface NexusGenCustomInputMethods<TypeName extends string> {
+    upload<FieldName extends string>(fieldName: FieldName, opts?: core.ScalarInputFieldConfig<core.GetGen3<"inputTypes", TypeName, FieldName>>): void // "Upload";
+  }
+}
+declare global {
+  interface NexusGenCustomOutputMethods<TypeName extends string> {
+    upload<FieldName extends string>(fieldName: FieldName, ...opts: core.ScalarOutSpread<TypeName, FieldName>): void // "Upload";
+  }
+}
 declare global {
   interface NexusGenCustomOutputProperties<TypeName extends string> {
     crud: NexusPrisma<TypeName, 'crud'>
@@ -538,6 +546,7 @@ export interface NexusGenRootTypes {
   ImageProd: { // root type
     id: number; // Int!
     product_id?: number | null; // Int
+    uploadFile: any; // Upload!
     url: string; // String!
   }
   Mutation: {};
@@ -660,6 +669,7 @@ export interface NexusGenFieldTypes {
     id: number; // Int!
     product: NexusGenRootTypes['Product'] | null; // Product
     product_id: number | null; // Int
+    uploadFile: any; // Upload!
     url: string; // String!
   }
   Mutation: { // field return type
