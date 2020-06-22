@@ -263,6 +263,7 @@ type ImageProd {
   id: Int!
   product: Product
   product_id: Int
+  uploadFile: Upload!
   url: String!
 }
 
@@ -661,5 +662,4 @@ input StringFilter {
   startsWith: String
 }
 
-"""The `Upload` scalar type represents a file upload."""
 scalar Upload
