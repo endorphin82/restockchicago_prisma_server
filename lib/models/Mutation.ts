@@ -3,19 +3,19 @@ import { Upload } from './Upload'
 import path from 'path'
 import fs from 'fs'
 
-const readFS = (stream: {
-  on: (
-    arg0: string,
-    arg1: (data: any) => number,
-  ) => { on: (arg0: string, arg1: () => void) => void }
-}) => {
-  let chunkList: any[] | Uint8Array[] = []
-  return new Promise((resolve, reject) =>
-    stream
-      .on('data', (data) => chunkList.push(data))
-      .on('end', () => resolve(Buffer.concat(chunkList))),
-  )
-}
+// const readFS = (stream: {
+//   on: (
+//     arg0: string,
+//     arg1: (data: any) => number,
+//   ) => { on: (arg0: string, arg1: () => void) => void }
+// }) => {
+//   let chunkList: any[] | Uint8Array[] = []
+//   return new Promise((resolve, reject) =>
+//     stream
+//       .on('data', (data) => chunkList.push(data))
+//       .on('end', () => resolve(Buffer.concat(chunkList))),
+//   )
+// }
 
 export const Mutation = objectType({
   name: 'Mutation',
@@ -85,7 +85,7 @@ export const Mutation = objectType({
             .on('close', (res: any) => {
               console.log('close ', res)
             })
-          return true
+          return "ok"
         }
       }
     })
