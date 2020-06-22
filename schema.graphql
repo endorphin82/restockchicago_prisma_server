@@ -397,6 +397,7 @@ type Mutation {
   updateOneImageCat(data: ImageCatUpdateInput!, where: ImageCatWhereUniqueInput!): ImageCat
   updateOneImageProd(data: ImageProdUpdateInput!, where: ImageProdWhereUniqueInput!): ImageProd
   updateOneProduct(data: ProductUpdateInput!, where: ProductWhereUniqueInput!): Product
+  uploadFile(file: Upload!): String!
   upsertOneCategory(create: CategoryCreateInput!, update: CategoryUpdateInput!, where: CategoryWhereUniqueInput!): Category!
   upsertOneImageCat(create: ImageCatCreateInput!, update: ImageCatUpdateInput!, where: ImageCatWhereUniqueInput!): ImageCat!
   upsertOneImageProd(create: ImageProdCreateInput!, update: ImageProdUpdateInput!, where: ImageProdWhereUniqueInput!): ImageProd!
@@ -659,3 +660,6 @@ input StringFilter {
   notIn: [String!]
   startsWith: String
 }
+
+"""The `Upload` scalar type represents a file upload."""
+scalar Upload

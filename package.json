@@ -8,6 +8,7 @@
     "@ra-data-prisma/backend": "^1.2.1",
     "apollo-server": "^2.14.3",
     "apollo-server-express": "^2.14.5",
+    "cors": "^2.8.5",
     "express": "^4.17.1",
     "lodash": "^4.17.15",
     "nexus": "^0.23.0",

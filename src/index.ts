@@ -1,15 +1,25 @@
 import express from 'express'
 import { schema } from '../lib/schema'
 import { createContext } from '../prisma/context'
-import { ApolloServer, gql } from 'apollo-server-express'
 
-const path = '/';
-const app = express();
+import cors from 'cors'
+import { ApolloServer } from 'apollo-server-express'
+
+const path = '/'
+const app = express()
+
+// @ts-ignore
+// global.__basedir = __dirname
+
+const corsOptions = {
+  origin: 'http://localhost:3000',
+  credentials: true
+}
 
 const midLogger = (req: any, res: any, next: any) => {
-  console.log("Hello from logger\n");
-  next();
-};
+  console.log('Hello from logger\n')
+  next()
+}
 
 const plugLogger = {
   // Fires whenever a GraphQL request is received from a client.
@@ -32,11 +42,11 @@ const plugLogger = {
 }
 const server = new ApolloServer({
   schema, context: createContext, plugins: [
-    plugLogger
+    // plugLogger
   ]
 })
-
-app.use(path, midLogger);
+app.use('*', cors(corsOptions))
+// app.use(path, midLogger)
 // @ts-ignore
 server.applyMiddleware({ app, path })
 

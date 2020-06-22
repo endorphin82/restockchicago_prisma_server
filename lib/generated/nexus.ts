@@ -556,6 +556,7 @@ export interface NexusGenRootTypes {
   Float: number;
   Boolean: boolean;
   ID: string;
+  Upload: any;
 }
 
 export interface NexusGenAllTypes extends NexusGenRootTypes {
@@ -682,6 +683,7 @@ export interface NexusGenFieldTypes {
     updateOneImageCat: NexusGenRootTypes['ImageCat'] | null; // ImageCat
     updateOneImageProd: NexusGenRootTypes['ImageProd'] | null; // ImageProd
     updateOneProduct: NexusGenRootTypes['Product'] | null; // Product
+    uploadFile: string; // String!
     upsertOneCategory: NexusGenRootTypes['Category']; // Category!
     upsertOneImageCat: NexusGenRootTypes['ImageCat']; // ImageCat!
     upsertOneImageProd: NexusGenRootTypes['ImageProd']; // ImageProd!
@@ -795,6 +797,9 @@ export interface NexusGenArgTypes {
     updateOneProduct: { // args
       data: NexusGenInputs['ProductUpdateInput']; // ProductUpdateInput!
       where: NexusGenInputs['ProductWhereUniqueInput']; // ProductWhereUniqueInput!
+    }
+    uploadFile: { // args
+      file: any; // Upload!
     }
     upsertOneCategory: { // args
       create: NexusGenInputs['CategoryCreateInput']; // CategoryCreateInput!
@@ -920,7 +925,7 @@ export type NexusGenEnumNames = "OrderByArg";
 
 export type NexusGenInterfaceNames = never;
 
-export type NexusGenScalarNames = "Boolean" | "Float" | "ID" | "Int" | "String";
+export type NexusGenScalarNames = "Boolean" | "Float" | "ID" | "Int" | "String" | "Upload";
 
 export type NexusGenUnionNames = never;
 
