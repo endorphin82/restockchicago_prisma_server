@@ -107,7 +107,7 @@ export interface NexusGenFieldTypes {
     uploadFile: string; // String!
   }
   Product: { // field return type
-    category: NexusGenRootTypes['Category'] | null; // Category
+    categories: NexusGenRootTypes['Category'][]; // [Category!]!
     category_id: number | null; // Int
     description: string | null; // String
     icon: string; // String!
@@ -144,6 +144,9 @@ export interface NexusGenArgTypes {
     }
   }
   Product: {
+    categories: { // args
+      skip?: number | null; // Int
+    }
     images: { // args
       skip?: number | null; // Int
     }
@@ -171,7 +174,7 @@ export interface NexusGenArgTypes {
       category_id: number; // Int!
     }
     productsByNameAndCategoryId: { // args
-      category_id: number; // Int!
+      category_id?: number | null; // Int
       name: string; // String!
     }
   }

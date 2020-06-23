@@ -5,7 +5,7 @@ export const Product = objectType({
   definition(t) {
     t.model.id()
     t.model.name()
-    t.model.category()
+    t.model.categories()
     t.model.url()
     t.model.description()
     t.model.icon()
