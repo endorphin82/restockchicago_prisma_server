@@ -7,6 +7,6 @@ export const ImageProd = objectType({
     t.model.product()
     t.model.url()
     t.model.product_id()
-    t.upload('uploadFile')
+    // t.upload('uploadFile')
   }
 })
