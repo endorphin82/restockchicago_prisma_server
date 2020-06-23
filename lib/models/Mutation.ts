@@ -6,13 +6,13 @@ import fs from 'fs'
 export const Mutation = objectType({
   name: 'Mutation',
   definition(t) {
-    // t.crud.createOneCategory()
-    // t.crud.updateOneCategory()
-    // t.crud.deleteOneCategory()
+    t.crud.createOneCategory()
+    t.crud.updateOneCategory()
+    t.crud.deleteOneCategory()
     //
-    // t.crud.createOneProduct()
-    // t.crud.updateOneProduct()
-    // t.crud.deleteOneProduct()
+    t.crud.createOneProduct()
+    t.crud.updateOneProduct()
+    t.crud.deleteOneProduct()
     // t.crud.createOneUpload()
   //   createOneImageProd(
   //     data: ImageProdCreateInput!
