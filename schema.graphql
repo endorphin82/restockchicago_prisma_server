@@ -39,7 +39,7 @@ type Mutation {
 }
 
 type Product {
-  category: Category
+  categories(skip: Int): [Category!]!
   category_id: Int
   description: String
   icon: String!
@@ -66,7 +66,7 @@ type Query {
   productByName(name: String!): Product!
   products(skip: Int): [Product!]!
   productsByCategoryId(category_id: Int!): [Product!]!
-  productsByNameAndCategoryId(category_id: Int!, name: String!): [Product!]!
+  productsByNameAndCategoryId(category_id: Int, name: String!): [Product!]!
 }
 
 """The `Upload` scalar type represents a file upload."""

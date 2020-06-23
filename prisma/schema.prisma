@@ -28,7 +28,7 @@ model Product {
   description  String?
   category_id  Int?
   price        Int
-  category     Category?   @relation(fields: [category_id], references: [id])
+  categories   Category[]
   images       ImageProd[]
   icon         String      @unique
 

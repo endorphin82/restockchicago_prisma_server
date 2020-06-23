@@ -55,14 +55,26 @@ export const Query = objectType({
       list: true,
       args: {
         name: stringArg({ required: true }),
-        category_id: intArg({ required: true })
+        category_id: intArg({ required: false })
       },
       resolve(_root, args, ctx) {
 
+        // return ctx.prisma
+        //   .category
+        //   .findOne({ where: { id: Number(args.category_id) } })
+        //   .products({ where: { name: { contains: String(args.name) } } })
+
         return ctx.prisma
-          .category
-          .findOne({ where: { id: Number(args.category_id) } })
-          .products({ where: { name: { contains: String(args.name) } } })
+          .product
+          .findMany({
+            where: {
+              name: { contains: String(args.name) },
+              categories: {contains: Number(args.category_id)}
+            }
+            // select: {
+            //
+            // }
+          })
       }
     })
 
