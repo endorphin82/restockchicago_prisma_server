@@ -62,17 +62,26 @@ export const Query = objectType({
         //   .category
         //   .findOne({ where: { id: Number(args.category_id) } })
         //   .products({ where: { name: { contains: String(args.name) } } })
-
-        return ctx.prisma
-          .product
-          .findMany({
+        return (!args.category_id) ?
+          ctx.prisma
+            .product
+            .findMany({
+              where: {
+                name: { contains: String(args.name) }
+                // categories: Number(args.category_id)
+              },
+              orderBy: { id: 'desc' }
+            }) :
+          ctx.prisma
+            .category
+            .findOne({
+              where: {
+                id: Number(args.category_id)
+              }
+            }).products({
             where: {
               name: { contains: String(args.name) }
-              // categories: Number(args.category_id)
             },
-            // select: {
-            //
-            // }
             orderBy: { id: 'desc' }
           })
       }
