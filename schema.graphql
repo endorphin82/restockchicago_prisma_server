@@ -6,10 +6,10 @@ type Category {
   description: String
   icon: String!
   id: Int!
-  images(skip: Int): [ImageCat!]!
+  images(after: ImageCatWhereUniqueInput, before: ImageCatWhereUniqueInput, first: Int, last: Int): [ImageCat!]!
   name: String!
   parent: Int
-  products(skip: Int): [Product!]!
+  products(after: ProductWhereUniqueInput, before: ProductWhereUniqueInput, first: Int, last: Int): [Product!]!
   url: String!
 }
 
@@ -351,12 +351,12 @@ input NullableStringFilter {
 }
 
 type Product {
-  categories(skip: Int): [Category!]!
+  categories(after: CategoryWhereUniqueInput, before: CategoryWhereUniqueInput, first: Int, last: Int): [Category!]!
   category_id: Int
   description: String
   icon: String!
   id: Int!
-  images(skip: Int): [ImageProd!]!
+  images(after: ImageProdWhereUniqueInput, before: ImageProdWhereUniqueInput, first: Int, last: Int): [ImageProd!]!
   name: String!
   price: Int!
   url: String!
@@ -494,12 +494,12 @@ input ProductWhereUniqueInput {
 }
 
 type Query {
-  categories(skip: Int): [Category!]!
+  categories(after: CategoryWhereUniqueInput, before: CategoryWhereUniqueInput, first: Int, last: Int): [Category!]!
   category(where: CategoryWhereUniqueInput!): Category
   categoryByName(name: String!): Category!
   product(where: ProductWhereUniqueInput!): Product
   productByName(name: String!): Product!
-  products(skip: Int): [Product!]!
+  products(after: ProductWhereUniqueInput, before: ProductWhereUniqueInput, first: Int, last: Int): [Product!]!
   productsByCategoryId(category_id: Int!): [Product!]!
   productsByNameAndCategoryId(category_id: Int, name: String!): [Product!]!
 }

@@ -8,11 +8,11 @@ import { Mutation } from './models/Mutation'
 import { Upload } from './models/Upload'
 import { makeSchema } from '@nexus/schema'
 import { nexusPrismaPlugin } from 'nexus-prisma'
+// import { addCrudResolvers } from '@ra-data-prisma/backend/'
 
 export const schema = makeSchema({
-  types: [Query, Mutation, Product, Category, ImageProd,
-    ImageCat, Upload],
-  plugins: [nexusPrismaPlugin()],
+  types: [Query, Mutation, Product, Category, ImageProd, ImageCat, Upload],
+  plugins: [nexusPrismaPlugin({ experimentalCRUD: true })],
   outputs: {
     schema: __dirname + '/../schema.graphql',
     typegen: __dirname + '/generated/nexus.ts'

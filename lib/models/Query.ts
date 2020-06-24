@@ -58,7 +58,6 @@ export const Query = objectType({
         category_id: intArg({ required: false })
       },
       resolve(_root, args, ctx) {
-
         // return ctx.prisma
         //   .category
         //   .findOne({ where: { id: Number(args.category_id) } })
@@ -68,12 +67,13 @@ export const Query = objectType({
           .product
           .findMany({
             where: {
-              name: { contains: String(args.name) },
-              categories: {contains: Number(args.category_id)}
-            }
+              name: { contains: String(args.name) }
+              // categories: Number(args.category_id)
+            },
             // select: {
             //
             // }
+            orderBy: { id: 'desc' }
           })
       }
     })

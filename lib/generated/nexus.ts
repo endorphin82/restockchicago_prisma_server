@@ -581,10 +581,16 @@ export interface NexusGenFieldTypes {
 export interface NexusGenArgTypes {
   Category: {
     images: { // args
-      skip?: number | null; // Int
+      after?: NexusGenInputs['ImageCatWhereUniqueInput'] | null; // ImageCatWhereUniqueInput
+      before?: NexusGenInputs['ImageCatWhereUniqueInput'] | null; // ImageCatWhereUniqueInput
+      first?: number | null; // Int
+      last?: number | null; // Int
     }
     products: { // args
-      skip?: number | null; // Int
+      after?: NexusGenInputs['ProductWhereUniqueInput'] | null; // ProductWhereUniqueInput
+      before?: NexusGenInputs['ProductWhereUniqueInput'] | null; // ProductWhereUniqueInput
+      first?: number | null; // Int
+      last?: number | null; // Int
     }
   }
   Mutation: {
@@ -614,15 +620,24 @@ export interface NexusGenArgTypes {
   }
   Product: {
     categories: { // args
-      skip?: number | null; // Int
+      after?: NexusGenInputs['CategoryWhereUniqueInput'] | null; // CategoryWhereUniqueInput
+      before?: NexusGenInputs['CategoryWhereUniqueInput'] | null; // CategoryWhereUniqueInput
+      first?: number | null; // Int
+      last?: number | null; // Int
     }
     images: { // args
-      skip?: number | null; // Int
+      after?: NexusGenInputs['ImageProdWhereUniqueInput'] | null; // ImageProdWhereUniqueInput
+      before?: NexusGenInputs['ImageProdWhereUniqueInput'] | null; // ImageProdWhereUniqueInput
+      first?: number | null; // Int
+      last?: number | null; // Int
     }
   }
   Query: {
     categories: { // args
-      skip?: number | null; // Int
+      after?: NexusGenInputs['CategoryWhereUniqueInput'] | null; // CategoryWhereUniqueInput
+      before?: NexusGenInputs['CategoryWhereUniqueInput'] | null; // CategoryWhereUniqueInput
+      first?: number | null; // Int
+      last?: number | null; // Int
     }
     category: { // args
       where: NexusGenInputs['CategoryWhereUniqueInput']; // CategoryWhereUniqueInput!
@@ -637,7 +652,10 @@ export interface NexusGenArgTypes {
       name: string; // String!
     }
     products: { // args
-      skip?: number | null; // Int
+      after?: NexusGenInputs['ProductWhereUniqueInput'] | null; // ProductWhereUniqueInput
+      before?: NexusGenInputs['ProductWhereUniqueInput'] | null; // ProductWhereUniqueInput
+      first?: number | null; // Int
+      last?: number | null; // Int
     }
     productsByCategoryId: { // args
       category_id: number; // Int!

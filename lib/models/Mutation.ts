@@ -11,7 +11,7 @@ export const Mutation = objectType({
     t.crud.deleteOneCategory()
     //
     t.crud.createOneProduct()
-    t.crud.updateOneProduct()
+    t.crud.updateOneProduct()
     t.crud.deleteOneProduct()
     // t.crud.createOneUpload()
   //   createOneImageProd(
