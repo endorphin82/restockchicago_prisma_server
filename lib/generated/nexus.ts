@@ -293,7 +293,6 @@ export interface NexusGenInputs {
   }
   ProductCreateInput: { // input type
     categories?: NexusGenInputs['CategoryCreateManyWithoutProductsInput'] | null; // CategoryCreateManyWithoutProductsInput
-    category_id?: number | null; // Int
     description?: string | null; // String
     icon: string; // String!
     images?: NexusGenInputs['ImageProdCreateManyWithoutProductInput'] | null; // ImageProdCreateManyWithoutProductInput
@@ -306,7 +305,6 @@ export interface NexusGenInputs {
     create?: NexusGenInputs['ProductCreateWithoutCategoriesInput'][] | null; // [ProductCreateWithoutCategoriesInput!]
   }
   ProductCreateWithoutCategoriesInput: { // input type
-    category_id?: number | null; // Int
     description?: string | null; // String
     icon: string; // String!
     images?: NexusGenInputs['ImageProdCreateManyWithoutProductInput'] | null; // ImageProdCreateManyWithoutProductInput
@@ -322,7 +320,6 @@ export interface NexusGenInputs {
   ProductScalarWhereInput: { // input type
     AND?: NexusGenInputs['ProductScalarWhereInput'][] | null; // [ProductScalarWhereInput!]
     categories?: NexusGenInputs['CategoryFilter'] | null; // CategoryFilter
-    category_id?: NexusGenInputs['NullableIntFilter'] | null; // NullableIntFilter
     description?: NexusGenInputs['NullableStringFilter'] | null; // NullableStringFilter
     icon?: NexusGenInputs['StringFilter'] | null; // StringFilter
     id?: NexusGenInputs['IntFilter'] | null; // IntFilter
@@ -335,7 +332,6 @@ export interface NexusGenInputs {
   }
   ProductUpdateInput: { // input type
     categories?: NexusGenInputs['CategoryUpdateManyWithoutProductsInput'] | null; // CategoryUpdateManyWithoutProductsInput
-    category_id?: number | null; // Int
     description?: string | null; // String
     icon?: string | null; // String
     id?: number | null; // Int
@@ -345,7 +341,6 @@ export interface NexusGenInputs {
     url?: string | null; // String
   }
   ProductUpdateManyDataInput: { // input type
-    category_id?: number | null; // Int
     description?: string | null; // String
     icon?: string | null; // String
     id?: number | null; // Int
@@ -373,7 +368,6 @@ export interface NexusGenInputs {
     where: NexusGenInputs['ProductWhereUniqueInput']; // ProductWhereUniqueInput!
   }
   ProductUpdateWithoutCategoriesDataInput: { // input type
-    category_id?: number | null; // Int
     description?: string | null; // String
     icon?: string | null; // String
     id?: number | null; // Int
@@ -390,7 +384,6 @@ export interface NexusGenInputs {
   ProductWhereInput: { // input type
     AND?: NexusGenInputs['ProductWhereInput'][] | null; // [ProductWhereInput!]
     categories?: NexusGenInputs['CategoryFilter'] | null; // CategoryFilter
-    category_id?: NexusGenInputs['NullableIntFilter'] | null; // NullableIntFilter
     description?: NexusGenInputs['NullableStringFilter'] | null; // NullableStringFilter
     icon?: NexusGenInputs['StringFilter'] | null; // StringFilter
     id?: NexusGenInputs['IntFilter'] | null; // IntFilter
@@ -402,7 +395,6 @@ export interface NexusGenInputs {
     url?: NexusGenInputs['StringFilter'] | null; // StringFilter
   }
   ProductWhereUniqueInput: { // input type
-    category_id?: number | null; // Int
     icon?: string | null; // String
     id?: number | null; // Int
     name?: string | null; // String
@@ -447,7 +439,6 @@ export interface NexusGenRootTypes {
   }
   Mutation: {};
   Product: { // root type
-    category_id?: number | null; // Int
     description?: string | null; // String
     icon: string; // String!
     id: number; // Int!
@@ -557,7 +548,6 @@ export interface NexusGenFieldTypes {
   }
   Product: { // field return type
     categories: NexusGenRootTypes['Category'][]; // [Category!]!
-    category_id: number | null; // Int
     description: string | null; // String
     icon: string; // String!
     id: number; // Int!

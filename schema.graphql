@@ -352,7 +352,6 @@ input NullableStringFilter {
 
 type Product {
   categories(after: CategoryWhereUniqueInput, before: CategoryWhereUniqueInput, first: Int, last: Int): [Category!]!
-  category_id: Int
   description: String
   icon: String!
   id: Int!
@@ -364,7 +363,6 @@ type Product {
 
 input ProductCreateInput {
   categories: CategoryCreateManyWithoutProductsInput
-  category_id: Int
   description: String
   icon: String!
   images: ImageProdCreateManyWithoutProductInput
@@ -379,7 +377,6 @@ input ProductCreateManyWithoutCategoriesInput {
 }
 
 input ProductCreateWithoutCategoriesInput {
-  category_id: Int
   description: String
   icon: String!
   images: ImageProdCreateManyWithoutProductInput
@@ -397,7 +394,6 @@ input ProductFilter {
 input ProductScalarWhereInput {
   AND: [ProductScalarWhereInput!]
   categories: CategoryFilter
-  category_id: NullableIntFilter
   description: NullableStringFilter
   icon: StringFilter
   id: IntFilter
@@ -411,7 +407,6 @@ input ProductScalarWhereInput {
 
 input ProductUpdateInput {
   categories: CategoryUpdateManyWithoutProductsInput
-  category_id: Int
   description: String
   icon: String
   id: Int
@@ -422,7 +417,6 @@ input ProductUpdateInput {
 }
 
 input ProductUpdateManyDataInput {
-  category_id: Int
   description: String
   icon: String
   id: Int
@@ -449,7 +443,6 @@ input ProductUpdateManyWithWhereNestedInput {
 }
 
 input ProductUpdateWithoutCategoriesDataInput {
-  category_id: Int
   description: String
   icon: String
   id: Int
@@ -473,7 +466,6 @@ input ProductUpsertWithWhereUniqueWithoutCategoriesInput {
 input ProductWhereInput {
   AND: [ProductWhereInput!]
   categories: CategoryFilter
-  category_id: NullableIntFilter
   description: NullableStringFilter
   icon: StringFilter
   id: IntFilter
@@ -486,7 +478,6 @@ input ProductWhereInput {
 }
 
 input ProductWhereUniqueInput {
-  category_id: Int
   icon: String
   id: Int
   name: String

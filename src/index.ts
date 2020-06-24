@@ -42,11 +42,11 @@ const plugLogger = {
 }
 const server = new ApolloServer({
   schema, context: createContext, plugins: [
-    // plugLogger
+    plugLogger
   ]
 })
 app.use('*', cors(corsOptions))
-// app.use(path, midLogger)
+app.use(path, midLogger)
 // @ts-ignore
 server.applyMiddleware({ app, path })
 

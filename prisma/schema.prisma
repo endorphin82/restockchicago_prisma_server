@@ -26,13 +26,10 @@ model Product {
   name         String      @unique
   url          String      @unique
   description  String?
-  category_id  Int?
   price        Int
   categories   Category[]
   images       ImageProd[]
   icon         String      @unique
-
-  @@index([category_id], name: "Product_Category_id_fk")
 }
 
 model ImageCat {
