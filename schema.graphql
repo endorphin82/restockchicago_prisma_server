@@ -322,7 +322,7 @@ type Mutation {
   deleteOneProduct(where: ProductWhereUniqueInput!): Product
   updateOneCategory(data: CategoryUpdateInput!, where: CategoryWhereUniqueInput!): Category
   updateOneProduct(data: ProductUpdateInput!, where: ProductWhereUniqueInput!): Product
-  uploadFile(file: Upload!): String!
+  uploadFile(file: Upload!, product_id: Int): String!
 }
 
 input NullableIntFilter {

@@ -606,6 +606,7 @@ export interface NexusGenArgTypes {
     }
     uploadFile: { // args
       file: any; // Upload!
+      product_id?: number | null; // Int
     }
   }
   Product: {
