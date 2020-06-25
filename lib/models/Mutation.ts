@@ -1,4 +1,4 @@
-import { objectType, arg } from '@nexus/schema'
+import { objectType, arg, intArg } from '@nexus/schema'
 import { Upload } from './Upload'
 import path from 'path'
 import fs from 'fs'
@@ -59,7 +59,8 @@ export const Mutation = objectType({
 
     t.string('uploadFile', {
       args: {
-        file: arg({ type: 'Upload', nullable: false })
+        file: arg({ type: 'Upload', nullable: false }),
+        product_id: intArg({ required: false })
       },
       // @ts-ignore
       resolve: async (parent, args) => {
@@ -79,7 +80,7 @@ export const Mutation = objectType({
             readStream
               .pipe(
                 fs.createWriteStream(
-                  path.join(__dirname, '../../uploads/', filename)
+                  path.join(__dirname, '../../uploads/', `${args.product_id}_${filename}`)
                 )
               )
               .on('close', (res: any) => {
