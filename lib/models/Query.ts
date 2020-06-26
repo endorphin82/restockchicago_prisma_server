@@ -8,6 +8,8 @@ export const Query = objectType({
     t.crud.product()
     t.crud.products()
 
+    // return ctx.prisma.queryRaw('SELECT AUTO_INCREMENT FROM information_schema.TABLES WHERE TABLE_SCHEMA = "restockchicago" AND TABLE_NAME = "Product";')
+
     t.field('productByName', {
       type: 'Product',
       args: {
