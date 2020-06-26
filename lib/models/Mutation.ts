@@ -14,9 +14,9 @@ export const Mutation = objectType({
     t.crud.updateOneProduct()
     t.crud.deleteOneProduct()
     // t.crud.createOneUpload()
-  //   createOneImageProd(
-  //     data: ImageProdCreateInput!
-  // ): ImageProd!
+    //   createOneImageProd(
+    //     data: ImageProdCreateInput!
+    // ): ImageProd!
 
     // t.string('createOneImageProd', {
     //   type: "ImageProd",
@@ -57,6 +57,41 @@ export const Mutation = objectType({
     //   }
     // })
 
+    t.string('uploadFiles', {
+      args: {
+        files: arg({ type: 'Upload', nullable: false, list: true }),
+        product_id: intArg({ required: false })
+      },
+      resolve: async (parent, args) => {
+        return await Promise.all(
+          args
+            .files
+            .map(
+              async (file) => {
+                const { createReadStream, filename } = await file
+                if (!filename) {
+                  throw Error('Invalid file Stream')
+                } else if (filename) {
+                  console.log('filename', filename)
+                  const readStream = createReadStream(filename)
+                  readStream
+                    .pipe(
+                      fs.createWriteStream(
+                        path.join(__dirname, '../../uploads/', `${args.product_id}_${filename}`)
+                      )
+                    )
+                    .on('close', (res: any) => {
+                      console.log('close ', res)
+                    })
+                }
+              }
+            )
+        )
+          .then(() => 'ok')
+          .catch((err) => 'bad')
+      }
+    })
+
     t.string('uploadFile', {
       args: {
         file: arg({ type: 'Upload', nullable: false }),
@@ -86,9 +121,9 @@ export const Mutation = objectType({
               .on('close', (res: any) => {
                 console.log('close ', res)
               })
-            return 'ok'
+            return 'file upload successful'
           } else {
-            console.log('please select image', mimetype)
+            return 'please select image'
           }
         }
       }
