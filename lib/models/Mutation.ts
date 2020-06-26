@@ -57,6 +57,7 @@ export const Mutation = objectType({
     //   }
     // })
 
+    // https://stackoverflow.com/questions/55216860/graphql-error-when-resolving-promises-during-file-upload
     t.string('uploadFiles', {
       args: {
         files: arg({ type: 'Upload', nullable: false, list: true }),
