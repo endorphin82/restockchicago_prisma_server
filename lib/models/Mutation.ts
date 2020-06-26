@@ -13,6 +13,7 @@ export const Mutation = objectType({
     t.crud.createOneProduct()
     t.crud.updateOneProduct()
     t.crud.deleteOneProduct()
+
     // t.crud.createOneUpload()
     //   createOneImageProd(
     //     data: ImageProdCreateInput!
