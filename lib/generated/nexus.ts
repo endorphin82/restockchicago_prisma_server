@@ -545,6 +545,7 @@ export interface NexusGenFieldTypes {
     updateOneCategory: NexusGenRootTypes['Category'] | null; // Category
     updateOneProduct: NexusGenRootTypes['Product'] | null; // Product
     uploadFile: string; // String!
+    uploadFiles: string; // String!
   }
   Product: { // field return type
     categories: NexusGenRootTypes['Category'][]; // [Category!]!
@@ -606,6 +607,10 @@ export interface NexusGenArgTypes {
     }
     uploadFile: { // args
       file: any; // Upload!
+      product_id?: number | null; // Int
+    }
+    uploadFiles: { // args
+      files: any[]; // [Upload!]!
       product_id?: number | null; // Int
     }
   }
