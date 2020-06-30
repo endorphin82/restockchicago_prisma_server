@@ -427,6 +427,12 @@ export interface NexusGenRootTypes {
     parent?: number | null; // Int
     url: string; // String!
   }
+  File: { // root type
+    name: string; // String!
+    status: string; // String!
+    uid: string; // String!
+    url: string; // String!
+  }
   ImageCat: { // root type
     category_id?: number | null; // Int
     id: number; // Int!
@@ -525,6 +531,12 @@ export interface NexusGenFieldTypes {
     products: NexusGenRootTypes['Product'][]; // [Product!]!
     url: string; // String!
   }
+  File: { // field return type
+    name: string; // String!
+    status: string; // String!
+    uid: string; // String!
+    url: string; // String!
+  }
   ImageCat: { // field return type
     category: NexusGenRootTypes['Category'] | null; // Category
     category_id: number | null; // Int
@@ -545,7 +557,7 @@ export interface NexusGenFieldTypes {
     updateOneCategory: NexusGenRootTypes['Category'] | null; // Category
     updateOneProduct: NexusGenRootTypes['Product'] | null; // Product
     uploadFile: string; // String!
-    uploadFiles: string; // String!
+    uploadFiles: NexusGenRootTypes['File'][]; // [File!]!
   }
   Product: { // field return type
     categories: NexusGenRootTypes['Category'][]; // [Category!]!
@@ -668,7 +680,7 @@ export interface NexusGenAbstractResolveReturnTypes {
 
 export interface NexusGenInheritedFields {}
 
-export type NexusGenObjectNames = "Category" | "ImageCat" | "ImageProd" | "Mutation" | "Product" | "Query";
+export type NexusGenObjectNames = "Category" | "File" | "ImageCat" | "ImageProd" | "Mutation" | "Product" | "Query";
 
 export type NexusGenInputNames = "CategoryCreateInput" | "CategoryCreateManyWithoutProductsInput" | "CategoryCreateWithoutProductsInput" | "CategoryFilter" | "CategoryScalarWhereInput" | "CategoryUpdateInput" | "CategoryUpdateManyDataInput" | "CategoryUpdateManyWithWhereNestedInput" | "CategoryUpdateManyWithoutProductsInput" | "CategoryUpdateWithWhereUniqueWithoutProductsInput" | "CategoryUpdateWithoutProductsDataInput" | "CategoryUpsertWithWhereUniqueWithoutProductsInput" | "CategoryWhereInput" | "CategoryWhereUniqueInput" | "ImageCatCreateManyWithoutCategoryInput" | "ImageCatCreateWithoutCategoryInput" | "ImageCatFilter" | "ImageCatScalarWhereInput" | "ImageCatUpdateManyDataInput" | "ImageCatUpdateManyWithWhereNestedInput" | "ImageCatUpdateManyWithoutCategoryInput" | "ImageCatUpdateWithWhereUniqueWithoutCategoryInput" | "ImageCatUpdateWithoutCategoryDataInput" | "ImageCatUpsertWithWhereUniqueWithoutCategoryInput" | "ImageCatWhereInput" | "ImageCatWhereUniqueInput" | "ImageProdCreateManyWithoutProductInput" | "ImageProdCreateWithoutProductInput" | "ImageProdFilter" | "ImageProdScalarWhereInput" | "ImageProdUpdateManyDataInput" | "ImageProdUpdateManyWithWhereNestedInput" | "ImageProdUpdateManyWithoutProductInput" | "ImageProdUpdateWithWhereUniqueWithoutProductInput" | "ImageProdUpdateWithoutProductDataInput" | "ImageProdUpsertWithWhereUniqueWithoutProductInput" | "ImageProdWhereInput" | "ImageProdWhereUniqueInput" | "IntFilter" | "NullableIntFilter" | "NullableStringFilter" | "ProductCreateInput" | "ProductCreateManyWithoutCategoriesInput" | "ProductCreateWithoutCategoriesInput" | "ProductFilter" | "ProductScalarWhereInput" | "ProductUpdateInput" | "ProductUpdateManyDataInput" | "ProductUpdateManyWithWhereNestedInput" | "ProductUpdateManyWithoutCategoriesInput" | "ProductUpdateWithWhereUniqueWithoutCategoriesInput" | "ProductUpdateWithoutCategoriesDataInput" | "ProductUpsertWithWhereUniqueWithoutCategoriesInput" | "ProductWhereInput" | "ProductWhereUniqueInput" | "StringFilter";
 

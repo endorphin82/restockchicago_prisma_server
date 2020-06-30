@@ -1,5 +1,6 @@
 import { objectType, arg, intArg } from '@nexus/schema'
 import { Upload } from './Upload'
+
 import path from 'path'
 import fs from 'fs'
 
@@ -59,37 +60,59 @@ export const Mutation = objectType({
     // })
 
     // https://stackoverflow.com/questions/55216860/graphql-error-when-resolving-promises-during-file-upload
-    t.string('uploadFiles', {
+    t.field('uploadFiles', {
+      type: 'File',
+      list: true,
       args: {
         files: arg({ type: 'Upload', nullable: false, list: true }),
         product_id: intArg({ required: false })
       },
       resolve: async (parent, args) => {
+        let resFiles = [] as any[]
         return await Promise.all(
           args
             .files
             .map(
               async (file) => {
+                console.log('ind', file)
                 const { createReadStream, filename } = await file
+                const resFile = {
+                  name: '',
+                  status: '',
+                  url: ''
+                }
+
                 if (!filename) {
                   throw Error('Invalid file Stream')
                 } else if (filename) {
-                  console.log('filename', filename)
                   const readStream = createReadStream(filename)
+
+                  const newName = `${args.product_id}_${filename}`
+                  resFile.name = newName
+                  resFile.url = `www.${newName}`
                   readStream
                     .pipe(
                       fs.createWriteStream(
-                        path.join(__dirname, '../../uploads/', `${args.product_id}_${filename}`)
+                        path.join(__dirname, '../../uploads/', newName)
                       )
                     )
                     .on('close', (res: any) => {
-                      console.log('close ', res)
+                      resFile.status = 'done'
+                      // resFile.uid = String(Date.now())
+                      resFiles.push(resFile)
                     })
+                  console.log('clos ', resFile)
+                  console.log('closes ', resFiles)
+
+                  // return resFiles
                 }
               }
             )
         )
-          .then(() => 'ok')
+          .then((res) => {
+            console.log('res', res)
+            return resFiles
+          })
           .catch((err) => 'bad')
       }
     })
