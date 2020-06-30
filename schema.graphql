@@ -136,6 +136,13 @@ input CategoryWhereUniqueInput {
   url: String
 }
 
+type File {
+  name: String!
+  status: String!
+  uid: String!
+  url: String!
+}
+
 type ImageCat {
   category: Category
   category_id: Int
@@ -323,7 +330,7 @@ type Mutation {
   updateOneCategory(data: CategoryUpdateInput!, where: CategoryWhereUniqueInput!): Category
   updateOneProduct(data: ProductUpdateInput!, where: ProductWhereUniqueInput!): Product
   uploadFile(file: Upload!, product_id: Int): String!
-  uploadFiles(files: [Upload!]!, product_id: Int): String!
+  uploadFiles(files: [Upload!]!, product_id: Int): [File!]!
 }
 
 input NullableIntFilter {
