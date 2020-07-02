@@ -20,45 +20,6 @@ export const Mutation = objectType({
     //     data: ImageProdCreateInput!
     // ): ImageProd!
 
-    // t.string('createOneImageProd', {
-    //   type: "ImageProd",
-    //   nullable: false,
-    //   args: {
-    //     file: arg({ type: 'Upload', nullable: false }),
-    //     data: arg({ type: 'ImageProdCreateInput', nullable: false })
-    //   },
-    //   // @ts-ignore
-    //   resolve: async (parent, args) => {
-    //     const {
-    //       createReadStream,
-    //       filename,
-    //       mimetype,
-    //       encoding
-    //     } = await args.file
-    //     console.log('args.file', args.file)
-    //     if (!filename) {
-    //       throw Error('Invalid file Stream')
-    //     } else if (filename) {
-    //       console.log('filename', filename)
-    //       if (mimetype.startsWith('image')) {
-    //         const readStream = createReadStream(filename)
-    //         readStream
-    //           .pipe(
-    //             fs.createWriteStream(
-    //               path.join(__dirname, '../../uploads/', filename)
-    //             )
-    //           )
-    //           .on('close', (res: any) => {
-    //             console.log('close ', res)
-    //           })
-    //         return 'ok'
-    //       } else {
-    //         console.log('please select image', mimetype)
-    //       }
-    //     }
-    //   }
-    // })
-
     // https://stackoverflow.com/questions/55216860/graphql-error-when-resolving-promises-during-file-upload
     t.field('uploadFiles', {
       type: 'File',
@@ -68,52 +29,42 @@ export const Mutation = objectType({
         product_id: intArg({ required: false })
       },
       resolve: async (parent, args) => {
-        let resFiles = [] as any[]
-        return await Promise.all(
-          args
-            .files
+        const { files } = await args
+        const resFiles = Promise.all(
+          files
             .map(
               async (file) => {
-                console.log('ind', file)
                 const { createReadStream, filename } = await file
-                const resFile = {
-                  name: '',
-                  status: '',
-                  url: ''
-                }
-
                 if (!filename) {
                   throw Error('Invalid file Stream')
                 } else if (filename) {
                   const readStream = createReadStream(filename)
-
                   const newName = `${args.product_id}_${filename}`
-                  resFile.name = newName
-                  resFile.url = `www.${newName}`
                   readStream
-                    .pipe(
-                      fs.createWriteStream(
-                        path.join(__dirname, '../../uploads/', newName)
-                      )
-                    )
-                    .on('close', (res: any) => {
-                      resFile.status = 'done'
-                      // resFile.uid = String(Date.now())
-                      resFiles.push(resFile)
+                    .pipe(fs.createWriteStream(path.join(__dirname, '../../uploads/', newName)))
+                    .on('close', () => {
+                      console.log('onClose')
                     })
-                  console.log('clos ', resFile)
-                  console.log('closes ', resFiles)
-
-                  // return resFiles
+                  return {
+                    uid: String(Date.now()),
+                    name: newName,
+                    status: 'done',
+                    url: `www.${newName}`
+                  }
                 }
               }
             )
         )
-          .then((res) => {
-            console.log('res', res)
-            return resFiles
-          })
-          .catch((err) => 'bad')
+        // console.log('resFiles', resFiles)
+        console.log('------', resFiles)
+        return resFiles.then(res => {
+          console.log('res---', res)
+          return res
+        }).catch(err => {
+          console.log('err---', err)
+          return err
+        })
+
       }
     })
 
