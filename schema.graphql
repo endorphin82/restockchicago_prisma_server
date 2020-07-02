@@ -142,6 +142,26 @@ type File {
   url: String!
 }
 
+type FileConnection {
+  """
+  https://facebook.github.io/relay/graphql/connections.htm#sec-Edge-Types
+  """
+  edges: [FileEdge]
+
+  """
+  https://facebook.github.io/relay/graphql/connections.htm#sec-undefined.PageInfo
+  """
+  pageInfo: PageInfo!
+}
+
+type FileEdge {
+  """https://facebook.github.io/relay/graphql/connections.htm#sec-Cursor"""
+  cursor: String!
+
+  """https://facebook.github.io/relay/graphql/connections.htm#sec-Node"""
+  node: File!
+}
+
 type ImageCat {
   category: Category
   category_id: Int
@@ -330,6 +350,19 @@ type Mutation {
   updateOneProduct(data: ProductUpdateInput!, where: ProductWhereUniqueInput!): Product
   uploadFile(file: Upload!, product_id: Int): String!
   uploadFiles(files: [Upload!]!, product_id: Int): [File!]!
+  UploadFiles(
+    """Returns the elements in the list that come after the specified cursor"""
+    after: String
+
+    """Returns the elements in the list that come before the specified cursor"""
+    before: String
+
+    """Returns the first n elements from the list."""
+    first: Int
+
+    """Returns the last n elements from the list."""
+    last: Int
+  ): [FileConnection!]!
 }
 
 input NullableIntFilter {
@@ -355,6 +388,31 @@ input NullableStringFilter {
   not: String
   notIn: [String!]
   startsWith: String
+}
+
+"""
+PageInfo cursor, as defined in https://facebook.github.io/relay/graphql/connections.htm#sec-undefined.PageInfo
+"""
+type PageInfo {
+  """
+  The cursor corresponding to the last nodes in edges. Null if the connection is empty.
+  """
+  endCursor: String
+
+  """
+  Used to indicate whether more edges exist following the set defined by the clients arguments.
+  """
+  hasNextPage: Boolean!
+
+  """
+  Used to indicate whether more edges exist prior to the set defined by the clients arguments.
+  """
+  hasPreviousPage: Boolean!
+
+  """
+  The cursor corresponding to the first nodes in edges. Null if the connection is empty.
+  """
+  startCursor: String
 }
 
 type Product {
