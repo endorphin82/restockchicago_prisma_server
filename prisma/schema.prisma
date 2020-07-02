@@ -18,7 +18,7 @@ model Category {
   parent       Int?
   products     Product[]
   images       ImageCat[]
-  icon         String     @unique
+  icon         String?
 }
 
 model Product {
@@ -29,7 +29,7 @@ model Product {
   price        Int
   categories   Category[]
   images       ImageProd[]
-  icon         String      @unique
+  icon         String?
 }
 
 model ImageCat {
