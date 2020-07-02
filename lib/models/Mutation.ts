@@ -15,11 +15,6 @@ export const Mutation = objectType({
     t.crud.updateOneProduct()
     t.crud.deleteOneProduct()
 
-    // t.crud.createOneUpload()
-    //   createOneImageProd(
-    //     data: ImageProdCreateInput!
-    // ): ImageProd!
-
     // https://stackoverflow.com/questions/55216860/graphql-error-when-resolving-promises-during-file-upload
     t.field('uploadFiles', {
       type: 'File',
@@ -64,7 +59,6 @@ export const Mutation = objectType({
           console.log('err---', err)
           return err
         })
-
       }
     })
 

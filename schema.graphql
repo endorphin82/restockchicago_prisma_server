@@ -4,7 +4,7 @@
 
 type Category {
   description: String
-  icon: String!
+  icon: String
   id: Int!
   images(after: ImageCatWhereUniqueInput, before: ImageCatWhereUniqueInput, first: Int, last: Int): [ImageCat!]!
   name: String!
@@ -15,7 +15,7 @@ type Category {
 
 input CategoryCreateInput {
   description: String
-  icon: String!
+  icon: String
   images: ImageCatCreateManyWithoutCategoryInput
   name: String!
   parent: Int
@@ -30,7 +30,7 @@ input CategoryCreateManyWithoutProductsInput {
 
 input CategoryCreateWithoutProductsInput {
   description: String
-  icon: String!
+  icon: String
   images: ImageCatCreateManyWithoutCategoryInput
   name: String!
   parent: Int
@@ -46,7 +46,7 @@ input CategoryFilter {
 input CategoryScalarWhereInput {
   AND: [CategoryScalarWhereInput!]
   description: NullableStringFilter
-  icon: StringFilter
+  icon: NullableStringFilter
   id: IntFilter
   images: ImageCatFilter
   name: StringFilter
@@ -118,7 +118,7 @@ input CategoryUpsertWithWhereUniqueWithoutProductsInput {
 input CategoryWhereInput {
   AND: [CategoryWhereInput!]
   description: NullableStringFilter
-  icon: StringFilter
+  icon: NullableStringFilter
   id: IntFilter
   images: ImageCatFilter
   name: StringFilter
@@ -130,7 +130,6 @@ input CategoryWhereInput {
 }
 
 input CategoryWhereUniqueInput {
-  icon: String
   id: Int
   name: String
   url: String
@@ -361,7 +360,7 @@ input NullableStringFilter {
 type Product {
   categories(after: CategoryWhereUniqueInput, before: CategoryWhereUniqueInput, first: Int, last: Int): [Category!]!
   description: String
-  icon: String!
+  icon: String
   id: Int!
   images(after: ImageProdWhereUniqueInput, before: ImageProdWhereUniqueInput, first: Int, last: Int): [ImageProd!]!
   name: String!
@@ -372,7 +371,7 @@ type Product {
 input ProductCreateInput {
   categories: CategoryCreateManyWithoutProductsInput
   description: String
-  icon: String!
+  icon: String
   images: ImageProdCreateManyWithoutProductInput
   name: String!
   price: Int!
@@ -386,7 +385,7 @@ input ProductCreateManyWithoutCategoriesInput {
 
 input ProductCreateWithoutCategoriesInput {
   description: String
-  icon: String!
+  icon: String
   images: ImageProdCreateManyWithoutProductInput
   name: String!
   price: Int!
@@ -403,7 +402,7 @@ input ProductScalarWhereInput {
   AND: [ProductScalarWhereInput!]
   categories: CategoryFilter
   description: NullableStringFilter
-  icon: StringFilter
+  icon: NullableStringFilter
   id: IntFilter
   images: ImageProdFilter
   name: StringFilter
@@ -475,7 +474,7 @@ input ProductWhereInput {
   AND: [ProductWhereInput!]
   categories: CategoryFilter
   description: NullableStringFilter
-  icon: StringFilter
+  icon: NullableStringFilter
   id: IntFilter
   images: ImageProdFilter
   name: StringFilter
@@ -486,7 +485,6 @@ input ProductWhereInput {
 }
 
 input ProductWhereUniqueInput {
-  icon: String
   id: Int
   name: String
   url: String
