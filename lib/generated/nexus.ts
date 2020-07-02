@@ -4,9 +4,21 @@
  */
 
 import * as Context from "../../prisma/context"
-
-
-
+import { core, connectionPluginCore } from "@nexus/schema"
+declare global {
+  interface NexusGenCustomInputMethods<TypeName extends string> {
+    upload<FieldName extends string>(fieldName: FieldName, opts?: core.ScalarInputFieldConfig<core.GetGen3<"inputTypes", TypeName, FieldName>>): void // "Upload";
+  }
+}
+declare global {
+  interface NexusGenCustomOutputMethods<TypeName extends string> {
+    upload<FieldName extends string>(fieldName: FieldName, ...opts: core.ScalarOutSpread<TypeName, FieldName>): void // "Upload";
+    connectionField<FieldName extends string>(
+            fieldName: FieldName, 
+            config: connectionPluginCore.ConnectionFieldConfig<TypeName, FieldName> 
+          ): void
+  }
+}
 declare global {
   interface NexusGenCustomOutputProperties<TypeName extends string> {
     crud: NexusPrisma<TypeName, 'crud'>
@@ -431,6 +443,14 @@ export interface NexusGenRootTypes {
     uid: string; // String!
     url: string; // String!
   }
+  FileConnection: { // root type
+    edges?: Array<NexusGenRootTypes['FileEdge'] | null> | null; // [FileEdge]
+    pageInfo: NexusGenRootTypes['PageInfo']; // PageInfo!
+  }
+  FileEdge: { // root type
+    cursor: string; // String!
+    node: NexusGenRootTypes['File']; // File!
+  }
   ImageCat: { // root type
     category_id?: number | null; // Int
     id: number; // Int!
@@ -442,6 +462,12 @@ export interface NexusGenRootTypes {
     url: string; // String!
   }
   Mutation: {};
+  PageInfo: { // root type
+    endCursor?: string | null; // String
+    hasNextPage: boolean; // Boolean!
+    hasPreviousPage: boolean; // Boolean!
+    startCursor?: string | null; // String
+  }
   Product: { // root type
     description?: string | null; // String
     icon?: string | null; // String
@@ -535,6 +561,14 @@ export interface NexusGenFieldTypes {
     uid: string; // String!
     url: string; // String!
   }
+  FileConnection: { // field return type
+    edges: Array<NexusGenRootTypes['FileEdge'] | null> | null; // [FileEdge]
+    pageInfo: NexusGenRootTypes['PageInfo']; // PageInfo!
+  }
+  FileEdge: { // field return type
+    cursor: string; // String!
+    node: NexusGenRootTypes['File']; // File!
+  }
   ImageCat: { // field return type
     category: NexusGenRootTypes['Category'] | null; // Category
     category_id: number | null; // Int
@@ -556,6 +590,13 @@ export interface NexusGenFieldTypes {
     updateOneProduct: NexusGenRootTypes['Product'] | null; // Product
     uploadFile: string; // String!
     uploadFiles: NexusGenRootTypes['File'][]; // [File!]!
+    UploadFiles: NexusGenRootTypes['FileConnection'][]; // [FileConnection!]!
+  }
+  PageInfo: { // field return type
+    endCursor: string | null; // String
+    hasNextPage: boolean; // Boolean!
+    hasPreviousPage: boolean; // Boolean!
+    startCursor: string | null; // String
   }
   Product: { // field return type
     categories: NexusGenRootTypes['Category'][]; // [Category!]!
@@ -623,6 +664,12 @@ export interface NexusGenArgTypes {
       files: any[]; // [Upload!]!
       product_id?: number | null; // Int
     }
+    UploadFiles: { // args
+      after?: string | null; // String
+      before?: string | null; // String
+      first?: number | null; // Int
+      last?: number | null; // Int
+    }
   }
   Product: {
     categories: { // args
@@ -678,7 +725,7 @@ export interface NexusGenAbstractResolveReturnTypes {
 
 export interface NexusGenInheritedFields {}
 
-export type NexusGenObjectNames = "Category" | "File" | "ImageCat" | "ImageProd" | "Mutation" | "Product" | "Query";
+export type NexusGenObjectNames = "Category" | "File" | "FileConnection" | "FileEdge" | "ImageCat" | "ImageProd" | "Mutation" | "PageInfo" | "Product" | "Query";
 
 export type NexusGenInputNames = "CategoryCreateInput" | "CategoryCreateManyWithoutProductsInput" | "CategoryCreateWithoutProductsInput" | "CategoryFilter" | "CategoryScalarWhereInput" | "CategoryUpdateInput" | "CategoryUpdateManyDataInput" | "CategoryUpdateManyWithWhereNestedInput" | "CategoryUpdateManyWithoutProductsInput" | "CategoryUpdateWithWhereUniqueWithoutProductsInput" | "CategoryUpdateWithoutProductsDataInput" | "CategoryUpsertWithWhereUniqueWithoutProductsInput" | "CategoryWhereInput" | "CategoryWhereUniqueInput" | "ImageCatCreateManyWithoutCategoryInput" | "ImageCatCreateWithoutCategoryInput" | "ImageCatFilter" | "ImageCatScalarWhereInput" | "ImageCatUpdateManyDataInput" | "ImageCatUpdateManyWithWhereNestedInput" | "ImageCatUpdateManyWithoutCategoryInput" | "ImageCatUpdateWithWhereUniqueWithoutCategoryInput" | "ImageCatUpdateWithoutCategoryDataInput" | "ImageCatUpsertWithWhereUniqueWithoutCategoryInput" | "ImageCatWhereInput" | "ImageCatWhereUniqueInput" | "ImageProdCreateManyWithoutProductInput" | "ImageProdCreateWithoutProductInput" | "ImageProdFilter" | "ImageProdScalarWhereInput" | "ImageProdUpdateManyDataInput" | "ImageProdUpdateManyWithWhereNestedInput" | "ImageProdUpdateManyWithoutProductInput" | "ImageProdUpdateWithWhereUniqueWithoutProductInput" | "ImageProdUpdateWithoutProductDataInput" | "ImageProdUpsertWithWhereUniqueWithoutProductInput" | "ImageProdWhereInput" | "ImageProdWhereUniqueInput" | "IntFilter" | "NullableIntFilter" | "NullableStringFilter" | "ProductCreateInput" | "ProductCreateManyWithoutCategoriesInput" | "ProductCreateWithoutCategoriesInput" | "ProductFilter" | "ProductScalarWhereInput" | "ProductUpdateInput" | "ProductUpdateManyDataInput" | "ProductUpdateManyWithWhereNestedInput" | "ProductUpdateManyWithoutCategoriesInput" | "ProductUpdateWithWhereUniqueWithoutCategoriesInput" | "ProductUpdateWithoutCategoriesDataInput" | "ProductUpsertWithWhereUniqueWithoutCategoriesInput" | "ProductWhereInput" | "ProductWhereUniqueInput" | "StringFilter";
 
@@ -716,6 +763,7 @@ declare global {
   interface NexusGenPluginTypeConfig<TypeName extends string> {
   }
   interface NexusGenPluginFieldConfig<TypeName extends string, FieldName extends string> {
+    
   }
   interface NexusGenPluginSchemaConfig {
   }
