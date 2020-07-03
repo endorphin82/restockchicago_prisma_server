@@ -1,4 +1,4 @@
-import { objectType, stringArg, intArg } from '@nexus/schema'
+import { objectType, stringArg, intArg, arg } from '@nexus/schema'
 
 export const Query = objectType({
   name: 'Query',
@@ -7,9 +7,34 @@ export const Query = objectType({
     t.crud.categories()
     t.crud.product()
     t.crud.products()
-
+    /*
+    products(
+      first: Int
+    last: Int
+    before: ProductWhereUniqueInput
+    after: ProductWhereUniqueInput
+  ): [Product!]!
+    */
     // return ctx.prisma.queryRaw('SELECT AUTO_INCREMENT FROM information_schema.TABLES WHERE TABLE_SCHEMA = "restockchicago" AND TABLE_NAME = "Product";')
-
+/*
+    t.list.field('products', {
+      type: 'Product',
+      args: {
+        first: intArg({ required: false }),
+        last: intArg(),
+        before: arg({ type: 'ProductWhereUniqueInput' }),
+        after: arg({ type: 'ProductWhereUniqueInput' })
+      },
+      async resolve(parent, args, ctx) {
+        const { first, last, before, after } = await args
+        const products = await ctx.prisma.product.findMany({
+          // @ts-ignore
+          first, last, before, after
+        })
+        return products
+      }
+    })
+*/
     t.field('productByName', {
       type: 'Product',
       args: {
@@ -52,6 +77,7 @@ export const Query = objectType({
       }
     })
 
+
     t.field('productsByNameAndCategoryId', {
       type: 'Product',
       list: true,
@@ -59,6 +85,7 @@ export const Query = objectType({
         name: stringArg({ required: true }),
         category_id: intArg({ required: false })
       },
+      // @ts-ignore
       resolve(_root, args, ctx) {
         // return ctx.prisma
         //   .category
@@ -95,6 +122,7 @@ export const Query = objectType({
       args: {
         category_id: intArg({ required: true })
       },
+      // @ts-ignore
       resolve(_root, args, ctx) {
         return ctx.prisma
           .category

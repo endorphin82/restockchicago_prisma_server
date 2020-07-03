@@ -4,6 +4,7 @@
   "description": "",
   "dependencies": {
     "@nexus/schema": "^0.14.0",
+    "@ra-data-prisma/backend": "^2.0.1",
     "apollo-server": "^2.14.3",
     "apollo-server-express": "^2.14.5",
     "cors": "^2.8.5",
