@@ -1,5 +1,5 @@
 import { Query } from './models/Query'
-import { Product, ProductAndUpload } from './models/Product'
+import { Product } from './models/Product'
 import { Category } from './models/Category'
 import { ImageCat } from './models/ImageCat'
 import { ImageProd } from './models/ImageProd'
@@ -12,8 +12,10 @@ import { nexusSchemaPrisma } from 'nexus-plugin-prisma/schema'
 // import { addCrudResolvers } from '@ra-data-prisma/backend/'
 
 export const schema = makeSchema({
-  types: [Query, Mutation, Product, Category, ImageProd, ImageCat, Upload, File, ProductAndUpload],
-  plugins: [nexusSchemaPrisma({ experimentalCRUD: true }), connectionPlugin()],
+  types: [Query, Mutation, Product, Category, ImageProd, ImageCat, Upload, File],
+  plugins: [nexusSchemaPrisma({ experimentalCRUD: true }),
+    // connectionPlugin()
+  ],
   outputs: {
     schema: __dirname + '/../schema.graphql',
     typegen: __dirname + '/generated/nexus.ts'

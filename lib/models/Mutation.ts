@@ -11,9 +11,33 @@ export const Mutation = objectType({
     t.crud.updateOneCategory()
     t.crud.deleteOneCategory()
     //
-    t.crud.createOneProduct()
+
+    /*
+    createOneProduct(
+    data: ProductCreateInput!
+    ): Product!
+    * */
+
+    t.crud.createOneProduct({alias: '_createOneProduct'})
     t.crud.updateOneProduct()
     t.crud.deleteOneProduct()
+
+    t.field('createOneProduct', {
+      type: 'Product',
+      list: true,
+      args: {
+        data: arg({ type: 'ProductCreateInput' }),
+        files: arg({ type: 'Upload', list: true })
+      },
+      // @ts-ignore
+      resolve: async (parent, args, ctx) => {
+        const { data } = await args
+// @ts-ignore
+        const product = await ctx.prisma.product.create({ data })
+        console.log('++++')
+        return product
+      }
+    })
 
     // https://stackoverflow.com/questions/55216860/graphql-error-when-resolving-promises-during-file-upload
     t.field('uploadFiles', {
