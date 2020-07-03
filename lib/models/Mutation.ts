@@ -18,7 +18,7 @@ export const Mutation = objectType({
     ): Product!
     * */
 
-    t.crud.createOneProduct({alias: '_createOneProduct'})
+    t.crud.createOneProduct({ alias: '_createOneProduct' })
     t.crud.updateOneProduct()
     t.crud.deleteOneProduct()
 
@@ -26,16 +26,51 @@ export const Mutation = objectType({
       type: 'Product',
       list: true,
       args: {
-        data: arg({ type: 'ProductCreateInput' }),
-        files: arg({ type: 'Upload', list: true })
+        data: arg({ type: 'ProductCreateInput', required: true }),
+        files: arg({ type: 'Upload', list: true, nullable: false })
       },
       // @ts-ignore
       resolve: async (parent, args, ctx) => {
-        const { data } = await args
+        const { data, files } = await args
+        // @ts-ignore
+        return await ctx.prisma.product.create({ data })
+          .then((res) => {
+            // @ts-ignore
+            res.files = []
+            console.log("res", res)
+            // @ts-ignore
+            return res.files = Promise.all(
+              files
+                .map(
+                  async (file) => {
+                    const { createReadStream, filename } = await file
+                    if (!filename) {
+                      throw Error('Invalid file Stream')
+                    } else if (filename) {
+                      const readStream = createReadStream(filename)
+                      const newName = `${filename}`
+                      readStream
+                        .pipe(fs.createWriteStream(path.join(__dirname, '../../uploads/', newName)))
+                        .on('close', () => {
+                          // console.log('onClose')
+                        })
+                      return {
+                        uid: String(Date.now()),
+                        name: newName,
+                        status: 'done',
+                        url: `www.${newName}`
+                      }
+                    }
+                  }
+                )
+            )
+          })
+
+
 // @ts-ignore
-        const product = await ctx.prisma.product.create({ data })
-        console.log('++++')
-        return product
+//         const product = await ctx.prisma.product.create({ data })
+//         console.log('++++')
+//         return product
       }
     })
 

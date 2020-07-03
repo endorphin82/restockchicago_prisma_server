@@ -613,8 +613,8 @@ export interface NexusGenArgTypes {
       data: NexusGenInputs['CategoryCreateInput']; // CategoryCreateInput!
     }
     createOneProduct: { // args
-      data?: NexusGenInputs['ProductCreateInput'] | null; // ProductCreateInput
-      files?: any[] | null; // [Upload!]
+      data: NexusGenInputs['ProductCreateInput']; // ProductCreateInput!
+      files: any[]; // [Upload!]!
     }
     deleteOneCategory: { // args
       where: NexusGenInputs['CategoryWhereUniqueInput']; // CategoryWhereUniqueInput!
