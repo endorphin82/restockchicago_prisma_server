@@ -15,9 +15,11 @@ export const Product = objectType({
     t.model.icon()
     t.model.price()
     t.model.images()
+    t.model.img()
+    // t.field('files', { type: File, list: true })
+
     // t.upload('up', { list: true })
     // t.field('files', { type: Upload, list: true })
-    t.field('files', { type: File, list: true })
     // t.list.field('files', { type: Upload })
   }
 })
