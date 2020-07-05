@@ -12,12 +12,6 @@ export const Mutation = objectType({
     t.crud.deleteOneCategory()
     //
 
-    /*
-    createOneProduct(
-    data: ProductCreateInput!
-    ): Product!
-    * */
-
     t.crud.createOneProduct({ alias: '_createOneProduct' })
     t.crud.updateOneProduct()
     t.crud.deleteOneProduct()
@@ -31,41 +25,57 @@ export const Mutation = objectType({
       },
       // @ts-ignore
       resolve: async (parent, args, ctx) => {
-        const { data, files } = await args
+        const { data: { name, price, description, icon, url }, files } = await args
         // @ts-ignore
-        return await ctx.prisma.product.create({ data })
-          .then((res) => {
-            // @ts-ignore
-            res.files = []
-            console.log("res", res)
-            // @ts-ignore
-            return res.files = Promise.all(
-              files
-                .map(
-                  async (file) => {
-                    const { createReadStream, filename } = await file
-                    if (!filename) {
-                      throw Error('Invalid file Stream')
-                    } else if (filename) {
-                      const readStream = createReadStream(filename)
-                      const newName = `${filename}`
-                      readStream
-                        .pipe(fs.createWriteStream(path.join(__dirname, '../../uploads/', newName)))
-                        .on('close', () => {
-                          // console.log('onClose')
-                        })
-                      return {
-                        uid: String(Date.now()),
-                        name: newName,
-                        status: 'done',
-                        url: `www.${newName}`
-                      }
-                    }
+        // const prod = await ctx.prisma.product.create({ data })
+        return Promise.all(
+          files
+            .map(
+              async (file) => {
+                const { createReadStream, filename } = await file
+                if (!filename) {
+                  throw Error('Invalid file Stream')
+                } else if (filename) {
+                  const readStream = createReadStream(filename)
+                  const newName = `${filename}`
+                  readStream
+                    .pipe(fs.createWriteStream(path.join(__dirname, '../../uploads/', newName)))
+                    .on('close', () => {
+                      // console.log('onClose')
+                    })
+                  return {
+                    uid: String(Date.now()),
+                    name: newName,
+                    status: 'done',
+                    url: `www.${newName}`
                   }
-                )
+                }
+              }
             )
+        ).then(imgs => {
+          return new Promise((resolve, reject) => {
+            const prod = ctx.prisma.product.create({
+              data: {
+                img: JSON.stringify(imgs),
+                name,
+                description,
+                icon,
+                price,
+                url
+              }
+            })
+            resolve(prod)
           })
-
+        }).catch(err => {
+          console.log('err1', err)
+        })
+          .then(res => {
+            console.log('res', res)
+            return res
+          })
+          .catch(err2 => {
+            console.log('err2', err2)
+          })
 
 // @ts-ignore
 //         const product = await ctx.prisma.product.create({ data })
