@@ -36,17 +36,13 @@ export const Mutation = objectType({
                   } else if (filename && mimetype.startsWith('image')) {
                     const readStream = createReadStream(filename)
                     const pos = ind
-                    const newName = `${String(Date.now())}+${filename}`
+                    const name = `${String(Date.now())}${filename}`
                     readStream
-                      .pipe(fs.createWriteStream(path.join(__dirname, '../../uploads/', newName)))
+                      .pipe(fs.createWriteStream(path.join(__dirname, '../../uploads/', name)))
                       .on('close', () => {
                         // console.log('onClose')
                       })
-                    return {
-                      pos,
-                      name: newName,
-                      url: `www.${newName}`
-                    }
+                    return { pos, name }
                   }
                 }
               ) : []
@@ -56,7 +52,7 @@ export const Mutation = objectType({
         // @ts-ignore
         return ctx.prisma.product.create({ data: { ...dataWitchImg } })
           .then(res => {
-            if(res === null){
+            if (res === null) {
               throw Error('Invalid res NULL')
             }
             return res
