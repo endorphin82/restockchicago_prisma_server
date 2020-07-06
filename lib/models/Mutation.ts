@@ -18,69 +18,50 @@ export const Mutation = objectType({
 
     t.field('createOneProduct', {
       type: 'Product',
-      list: true,
       args: {
         data: arg({ type: 'ProductCreateInput', required: true }),
-        files: arg({ type: 'Upload', list: true, nullable: false })
+        files: arg({ type: 'Upload', list: true, nullable: true })
       },
-      // @ts-ignore
+      // @ts-ignores
       resolve: async (parent, args, ctx) => {
-        const { data: { name, price, description, icon, url }, files } = await args
-        // @ts-ignore
-        // const prod = await ctx.prisma.product.create({ data })
-        return Promise.all(
-          files
-            .map(
-              async (file) => {
-                const { createReadStream, filename } = await file
-                if (!filename) {
-                  throw Error('Invalid file Stream')
-                } else if (filename) {
-                  const readStream = createReadStream(filename)
-                  const newName = `${filename}`
-                  readStream
-                    .pipe(fs.createWriteStream(path.join(__dirname, '../../uploads/', newName)))
-                    .on('close', () => {
-                      // console.log('onClose')
-                    })
-                  return {
-                    uid: String(Date.now()),
-                    name: newName,
-                    status: 'done',
-                    url: `www.${newName}`
+        const { data, files } = args
+        const imgs = await Promise.all(
+          files ?
+            files
+              .map(
+                async (file, ind) => {
+                  const { createReadStream, filename, mimetype } = await file
+                  if (!filename) {
+                    throw Error('Invalid file Stream')
+                  } else if (filename && mimetype.startsWith('image')) {
+                    const readStream = createReadStream(filename)
+                    const pos = ind
+                    const newName = `${String(Date.now())}+${filename}`
+                    readStream
+                      .pipe(fs.createWriteStream(path.join(__dirname, '../../uploads/', newName)))
+                      .on('close', () => {
+                        // console.log('onClose')
+                      })
+                    return {
+                      pos,
+                      name: newName,
+                      url: `www.${newName}`
+                    }
                   }
                 }
-              }
-            )
-        ).then(imgs => {
-          return new Promise((resolve, reject) => {
-            const prod = ctx.prisma.product.create({
-              data: {
-                img: JSON.stringify(imgs),
-                name,
-                description,
-                icon,
-                price,
-                url
-              }
-            })
-            resolve(prod)
-          })
-        }).catch(err => {
-          console.log('err1', err)
-        })
+              ) : []
+        )
+
+        const dataWitchImg = Object.assign(data, { img: JSON.stringify(imgs) })
+        // @ts-ignore
+        return ctx.prisma.product.create({ data: { ...dataWitchImg } })
           .then(res => {
-            console.log('res', res)
+            if(res === null){
+              throw Error('Invalid res NULL')
+            }
             return res
           })
-          .catch(err2 => {
-            console.log('err2', err2)
-          })
-
-// @ts-ignore
-//         const product = await ctx.prisma.product.create({ data })
-//         console.log('++++')
-//         return product
+          .catch(err => console.log('EEEEEERRR', err))
       }
     })
 
@@ -167,6 +148,5 @@ export const Mutation = objectType({
         }
       }
     })
-
   }
 })
