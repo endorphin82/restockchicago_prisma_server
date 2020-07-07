@@ -15,6 +15,13 @@ export const Product = objectType({
     t.model.icon()
     t.model.price()
     t.model.images()
+    // t.field('img', {
+    //   list: true,
+    //   type: 'Img',
+    //   // @ts-ignore
+    //   resolve: parent => JSON.parse(parent.img)
+    //
+    // })
     t.model.img()
     // t.field('files', { type: File, list: true })
 
