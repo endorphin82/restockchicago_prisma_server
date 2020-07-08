@@ -24,8 +24,8 @@ const midLogger = (req: any, res: any, next: any) => {
 const plugLogger = {
   // Fires whenever a GraphQL request is received from a client.
   requestDidStart(requestContext: any) {
-    console.log('Request started! Query:\n' +
-      requestContext.request.query)
+    // console.log('Request started! Query:\n' +
+    //   requestContext.request.query)
 
     return {
 
