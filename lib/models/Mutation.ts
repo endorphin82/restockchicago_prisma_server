@@ -14,7 +14,7 @@ export const Mutation = objectType({
 
     t.crud.createOneProduct({ alias: '_createOneProduct' })
     t.crud.updateOneProduct()
-    t.crud.deleteOneProduct()
+    t.crud.deleteOneProduct({ alias: '_deleteOneProduct' })
 
     t.field('createOneProduct', {
       type: 'Product',
@@ -60,88 +60,46 @@ export const Mutation = objectType({
           .catch(err => console.log('EEEEEERRR', err))
       }
     })
-
-    // https://stackoverflow.com/questions/55216860/graphql-error-when-resolving-promises-during-file-upload
-    t.field('uploadFiles', {
-      type: 'File',
-      list: true,
+    /*
+    deleteOneProduct(
+      where: ProductWhereUniqueInput!
+  ): Product
+    */
+    t.field('deleteOneProduct', {
+      type: 'Product',
       args: {
-        files: arg({ type: 'Upload', nullable: false, list: true }),
-        product_id: intArg({ required: false })
+        where: arg({ type: 'ProductWhereUniqueInput', required: true })
       },
-      resolve: async (parent, args) => {
-        const { files } = await args
-        const resFiles = Promise.all(
-          files
-            .map(
-              async (file) => {
-                const { createReadStream, filename } = await file
-                if (!filename) {
-                  throw Error('Invalid file Stream')
-                } else if (filename) {
-                  const readStream = createReadStream(filename)
-                  const newName = `${args.product_id}_${filename}`
-                  readStream
-                    .pipe(fs.createWriteStream(path.join(__dirname, '../../uploads/', newName)))
-                    .on('close', () => {
-                      console.log('onClose')
-                    })
-                  return {
-                    uid: String(Date.now()),
-                    name: newName,
-                    status: 'done',
-                    url: `www.${newName}`
+      // @ts-ignores
+      resolve: async (parent, args, ctx) => {
+        const { where } = args
+        console.log('del', where)
+        // @ts-ignore
+        const prod = await ctx.prisma.product.delete({ where })
+        // @ts-ignore
+        const imgs = JSON.parse(prod.img)
+
+        console.log('imgs', imgs)
+
+        const imgsFileNames = imgs.map((i: any) => i['name'])
+
+        console.log('imgsFileNames', imgsFileNames)
+
+        await Promise.all(
+          imgsFileNames ?
+            imgsFileNames
+              .map(
+                async (file: string, ind: number) => {
+                  if (!file) {
+                    throw Error('No file Name')
                   }
-                }
-              }
-            )
-        )
-        // console.log('resFiles', resFiles)
-        console.log('------', resFiles)
-        return resFiles.then(res => {
-          console.log('res---', res)
-          return res
-        }).catch(err => {
-          console.log('err---', err)
-          return err
-        })
-      }
-    })
 
-    t.string('uploadFile', {
-      args: {
-        file: arg({ type: 'Upload', nullable: false }),
-        product_id: intArg({ required: false })
-      },
-      // @ts-ignore
-      resolve: async (parent, args) => {
-        const {
-          createReadStream,
-          filename,
-          mimetype,
-          encoding
-        } = await args.file
-        console.log('args.file', args.file)
-        if (!filename) {
-          throw Error('Invalid file Stream')
-        } else if (filename) {
-          console.log('filename', filename)
-          if (mimetype.startsWith('image')) {
-            const readStream = createReadStream(filename)
-            readStream
-              .pipe(
-                fs.createWriteStream(
-                  path.join(__dirname, '../../uploads/', `${args.product_id}_${filename}`)
-                )
-              )
-              .on('close', (res: any) => {
-                console.log('close ', res)
-              })
-            return 'file upload successful'
-          } else {
-            return 'please select image'
-          }
-        }
+                  fs.unlinkSync(path.join(__dirname, '../../uploads/'+file))
+
+                }
+              ) : []
+        )
+        return prod
       }
     })
   }

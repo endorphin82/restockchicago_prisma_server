@@ -565,14 +565,13 @@ export interface NexusGenFieldTypes {
   }
   Mutation: { // field return type
     _createOneProduct: NexusGenRootTypes['Product']; // Product!
+    _deleteOneProduct: NexusGenRootTypes['Product'] | null; // Product
     createOneCategory: NexusGenRootTypes['Category']; // Category!
     createOneProduct: NexusGenRootTypes['Product']; // Product!
     deleteOneCategory: NexusGenRootTypes['Category'] | null; // Category
-    deleteOneProduct: NexusGenRootTypes['Product'] | null; // Product
+    deleteOneProduct: NexusGenRootTypes['Product']; // Product!
     updateOneCategory: NexusGenRootTypes['Category'] | null; // Category
     updateOneProduct: NexusGenRootTypes['Product'] | null; // Product
-    uploadFile: string; // String!
-    uploadFiles: NexusGenRootTypes['File'][]; // [File!]!
   }
   Product: { // field return type
     categories: NexusGenRootTypes['Category'][]; // [Category!]!
@@ -616,6 +615,9 @@ export interface NexusGenArgTypes {
     _createOneProduct: { // args
       data: NexusGenInputs['ProductCreateInput']; // ProductCreateInput!
     }
+    _deleteOneProduct: { // args
+      where: NexusGenInputs['ProductWhereUniqueInput']; // ProductWhereUniqueInput!
+    }
     createOneCategory: { // args
       data: NexusGenInputs['CategoryCreateInput']; // CategoryCreateInput!
     }
@@ -636,14 +638,6 @@ export interface NexusGenArgTypes {
     updateOneProduct: { // args
       data: NexusGenInputs['ProductUpdateInput']; // ProductUpdateInput!
       where: NexusGenInputs['ProductWhereUniqueInput']; // ProductWhereUniqueInput!
-    }
-    uploadFile: { // args
-      file: any; // Upload!
-      product_id?: number | null; // Int
-    }
-    uploadFiles: { // args
-      files: any[]; // [Upload!]!
-      product_id?: number | null; // Int
     }
   }
   Product: {
