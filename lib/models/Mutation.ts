@@ -25,6 +25,7 @@ export const Mutation = objectType({
       // @ts-ignores
       resolve: async (parent, args, ctx) => {
         const { data, files } = args
+
         const imgs = await Promise.all(
           files ?
             files
@@ -40,7 +41,6 @@ export const Mutation = objectType({
                     readStream
                       .pipe(fs.createWriteStream(path.join(__dirname, '../../uploads/', name)))
                       .on('close', () => {
-                        // console.log('onClose')
                       })
                     return { pos, name }
                   }
@@ -48,7 +48,10 @@ export const Mutation = objectType({
               ) : []
         )
 
-        const dataWitchImg = Object.assign(data, { img: JSON.stringify(imgs) })
+        const dataWitchImg = {
+          ...data,
+          ...((imgs.length == 0) ? {} : { img: JSON.stringify(imgs) })
+        }
         // @ts-ignore
         return ctx.prisma.product.create({ data: { ...dataWitchImg } })
           .then(res => {
@@ -60,44 +63,30 @@ export const Mutation = objectType({
           .catch(err => console.log('EEEEEERRR', err))
       }
     })
-    /*
-    deleteOneProduct(
-      where: ProductWhereUniqueInput!
-  ): Product
-    */
+
     t.field('deleteOneProduct', {
       type: 'Product',
       args: {
         where: arg({ type: 'ProductWhereUniqueInput', required: true })
       },
       // @ts-ignores
-      resolve: async (parent, args, ctx) => {
-        const { where } = args
-        console.log('del', where)
+      resolve: async (parent, { where }, ctx) => {
         // @ts-ignore
         const prod = await ctx.prisma.product.delete({ where })
         // @ts-ignore
         const imgs = JSON.parse(prod.img)
-
-        console.log('imgs', imgs)
-
         const imgsFileNames = imgs.map((i: any) => i['name'])
 
-        console.log('imgsFileNames', imgsFileNames)
-
-        await Promise.all(
-          imgsFileNames ?
-            imgsFileNames
-              .map(
-                async (file: string, ind: number) => {
-                  if (!file) {
-                    throw Error('No file Name')
-                  }
-
-                  fs.unlinkSync(path.join(__dirname, '../../uploads/'+file))
-
+        imgsFileNames && await Promise.all(
+          imgsFileNames
+            .map(
+              async (file: string, ind: number) => {
+                if (!file) {
+                  throw Error('No file Name')
                 }
-              ) : []
+                fs.unlinkSync(path.join(__dirname, '../../uploads/' + file))
+              }
+            )
         )
         return prod
       }
