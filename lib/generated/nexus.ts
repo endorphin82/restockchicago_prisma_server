@@ -593,6 +593,7 @@ export interface NexusGenFieldTypes {
     products: NexusGenRootTypes['Product'][]; // [Product!]!
     productsByCategoryId: NexusGenRootTypes['Product'][]; // [Product!]!
     productsByNameAndCategoryId: NexusGenRootTypes['Product'][]; // [Product!]!
+    productsByNameAndCategoryIds: NexusGenRootTypes['Product'][]; // [Product!]!
   }
 }
 
@@ -684,6 +685,10 @@ export interface NexusGenArgTypes {
     }
     productsByNameAndCategoryId: { // args
       category_id?: number | null; // Int
+      name: string; // String!
+    }
+    productsByNameAndCategoryIds: { // args
+      category_ids?: number[] | null; // [Int!]
       name: string; // String!
     }
   }

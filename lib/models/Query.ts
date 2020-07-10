@@ -16,25 +16,25 @@ export const Query = objectType({
   ): [Product!]!
     */
     // return ctx.prisma.queryRaw('SELECT AUTO_INCREMENT FROM information_schema.TABLES WHERE TABLE_SCHEMA = "restockchicago" AND TABLE_NAME = "Product";')
-/*
-    t.list.field('products', {
-      type: 'Product',
-      args: {
-        first: intArg({ required: false }),
-        last: intArg(),
-        before: arg({ type: 'ProductWhereUniqueInput' }),
-        after: arg({ type: 'ProductWhereUniqueInput' })
-      },
-      async resolve(parent, args, ctx) {
-        const { first, last, before, after } = await args
-        const products = await ctx.prisma.product.findMany({
-          // @ts-ignore
-          first, last, before, after
+    /*
+        t.list.field('products', {
+          type: 'Product',
+          args: {
+            first: intArg({ required: false }),
+            last: intArg(),
+            before: arg({ type: 'ProductWhereUniqueInput' }),
+            after: arg({ type: 'ProductWhereUniqueInput' })
+          },
+          async resolve(parent, args, ctx) {
+            const { first, last, before, after } = await args
+            const products = await ctx.prisma.product.findMany({
+              // @ts-ignore
+              first, last, before, after
+            })
+            return products
+          }
         })
-        return products
-      }
-    })
-*/
+    */
     t.field('productByName', {
       type: 'Product',
       args: {
@@ -115,6 +115,78 @@ export const Query = objectType({
           })
       }
     })
+    t.field('productsByNameAndCategoryIds', {
+      type: 'Product',
+      list: true,
+      args: {
+        name: stringArg({ required: true }),
+        category_ids: intArg({ required: false, list: true })
+      },
+      // @ts-ignore
+      resolve: async (_root, args, ctx) => {
+        const { category_ids, name } = args
+        if (!category_ids) {
+          const prods = await ctx.prisma
+            .product
+            .findMany({
+              where: {
+                name: { contains: String(name) }
+                // categories: Number(args.category_id)
+              },
+              orderBy: { id: 'desc' }
+            })
+          return prods
+        } else {
+
+          // const prods = await Promise.all(
+          //   // @ts-ignore
+          //   category_ids
+          //     // @ts-ignore
+          //     .reduce(async (acc: any, cat_id: any) => {
+          //       const prod = await ctx.prisma
+          //         .category
+          //         .findOne({
+          //           where: {
+          //             id: Number(cat_id)
+          //           }
+          //         }).products({
+          //           where: {
+          //             name: { contains: String(name) }
+          //           },
+          //           orderBy: { id: 'desc' }
+          //         })
+          //       console.log('+++', prod)
+          //       return acc.concat(prod)
+          //     })
+          // )
+          // console.log("prods++++",prods)
+          // return prods
+          let arr = await Promise.all(
+            category_ids
+              .map(async cat_id => {
+                const prod = await ctx.prisma
+                  .category
+                  .findOne({
+                    where: {
+                      id: Number(cat_id)
+                    }
+                  }).products({
+                    where: {
+                      name: { contains: String(name) }
+                    },
+                    orderBy: { id: 'desc' }
+                  })
+                return prod
+              })
+          )
+          const prods = arr.reduce(function(a: any, b: any) {
+            return a.concat(b)
+          })
+          return prods
+        }
+      }
+    })
+
 
     t.field('productsByCategoryId', {
       type: 'Product',
