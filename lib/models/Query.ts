@@ -115,7 +115,7 @@ export const Query = objectType({
           })
       }
     })
-    t.field('productsByNameAndCategoryIds', {
+      t.field('productsByNameAndCategoryIds', {
       type: 'Product',
       list: true,
       args: {
@@ -137,30 +137,6 @@ export const Query = objectType({
             })
           return prods
         } else {
-
-          // const prods = await Promise.all(
-          //   // @ts-ignore
-          //   category_ids
-          //     // @ts-ignore
-          //     .reduce(async (acc: any, cat_id: any) => {
-          //       const prod = await ctx.prisma
-          //         .category
-          //         .findOne({
-          //           where: {
-          //             id: Number(cat_id)
-          //           }
-          //         }).products({
-          //           where: {
-          //             name: { contains: String(name) }
-          //           },
-          //           orderBy: { id: 'desc' }
-          //         })
-          //       console.log('+++', prod)
-          //       return acc.concat(prod)
-          //     })
-          // )
-          // console.log("prods++++",prods)
-          // return prods
           let arr = await Promise.all(
             category_ids
               .map(async cat_id => {
