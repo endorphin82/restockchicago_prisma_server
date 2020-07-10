@@ -1,10 +1,11 @@
 import express from 'express'
 import { schema } from '../lib/schema'
 import { createContext } from '../prisma/context'
-
+import * as p from 'path'
 import cors from 'cors'
 import { ApolloServer } from 'apollo-server-express'
 
+// const path = '/'
 const path = '/'
 const app = express()
 
@@ -45,7 +46,12 @@ const server = new ApolloServer({
     plugLogger
   ]
 })
+
 app.use('*', cors(corsOptions))
+
+console.log("__dirname", p.join(__dirname, 'uploads/'))
+app.use('/images', express.static(p.join(__dirname, '../uploads')))
+
 app.use(path, midLogger)
 // @ts-ignore
 server.applyMiddleware({ app, path })
