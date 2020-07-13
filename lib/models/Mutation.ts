@@ -47,7 +47,6 @@ export const Mutation = objectType({
                 }
               ) : []
         )
-
         const dataWitchImg = {
           ...data,
           ...((imgs.length == 0) ? {} : { img: JSON.stringify(imgs) })
@@ -71,23 +70,27 @@ export const Mutation = objectType({
       },
       // @ts-ignores
       resolve: async (parent, { where }, ctx) => {
+        console.log('del---------')
         // @ts-ignore
         const prod = await ctx.prisma.product.delete({ where })
+        console.log('del++++++')
         // @ts-ignore
         const imgs = JSON.parse(prod.img)
-        const imgsFileNames = imgs.map((i: any) => i['name'])
-
-        imgsFileNames && await Promise.all(
-          imgsFileNames
-            .map(
-              async (file: string, ind: number) => {
-                if (!file) {
-                  throw Error('No file Name')
+        if (imgs) {
+          const imgsFileNames = imgs.map((i: any) => i['name'])
+          await Promise.all(
+            imgsFileNames
+              .map(
+                async (file: string, ind: number) => {
+                  if (!file) {
+                    throw Error('No file Name')
+                  }
+                  fs.unlinkSync(path.join(__dirname, '../../uploads/' + file))
                 }
-                fs.unlinkSync(path.join(__dirname, '../../uploads/' + file))
-              }
-            )
-        )
+              )
+          )
+        } else
+          console.log('imgsFileNames---')
         return prod
       }
     })
