@@ -125,7 +125,7 @@ export const Query = objectType({
       // @ts-ignore
       resolve: async (_root, args, ctx) => {
         const { category_ids, name } = args
-        if (!category_ids) {
+        if (category_ids?.length == 0 || !category_ids) {
           const prods = await ctx.prisma
             .product
             .findMany({
