@@ -2,7 +2,6 @@ import { Query } from './models/Query'
 import { Product } from './models/Product'
 import { Category } from './models/Category'
 import { ImageCat } from './models/ImageCat'
-import { ImageProd } from './models/ImageProd'
 import { Mutation } from './models/Mutation'
 import { Upload } from './models/Upload'
 import { File } from './models/File'
@@ -12,7 +11,7 @@ import { nexusSchemaPrisma } from 'nexus-plugin-prisma/schema'
 // import { addCrudResolvers } from '@ra-data-prisma/backend/'
 
 export const schema = makeSchema({
-  types: [Query, Mutation, Product, Category, ImageProd, ImageCat, Upload, File],
+  types: [Query, Mutation, Product, Category, ImageCat, Upload, File],
   plugins: [nexusSchemaPrisma({ experimentalCRUD: true }),
     // connectionPlugin()
   ],

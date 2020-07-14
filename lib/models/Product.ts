@@ -14,7 +14,6 @@ export const Product = objectType({
     t.model.description()
     t.model.icon()
     t.model.price()
-    t.model.images()
     // t.field('img', {
     //   list: true,
     //   type: 'Img',

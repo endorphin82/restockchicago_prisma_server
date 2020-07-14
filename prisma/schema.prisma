@@ -27,15 +27,6 @@ model ImageCat {
   @@index([category_id], name: "Image_Category_id_fk")
 }
 
-model ImageProd {
-  id         Int      @default(autoincrement()) @id
-  product_id Int?
-  url        String
-  product    Product? @relation(fields: [product_id], references: [id])
-
-  @@index([product_id], name: "Image_Product_id_fk")
-}
-
 model Product {
   description String?
   icon        String
@@ -44,6 +35,5 @@ model Product {
   name        String      @unique
   price       Int
   url         String      @unique
-  images      ImageProd[]
   categories  Category[]  @relation(references: [id])
 }
