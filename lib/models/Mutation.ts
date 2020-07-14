@@ -10,7 +10,6 @@ export const Mutation = objectType({
     t.crud.createOneCategory()
     t.crud.updateOneCategory()
     t.crud.deleteOneCategory()
-    //
 
     t.crud.createOneProduct({ alias: '_createOneProduct' })
     t.crud.updateOneProduct()
@@ -51,15 +50,32 @@ export const Mutation = objectType({
           ...data,
           ...((imgs.length == 0) ? {} : { img: JSON.stringify(imgs) })
         }
+        const imgsFileNames = imgs.map((i: any) => i['name'])
         // @ts-ignore
         return ctx.prisma.product.create({ data: { ...dataWitchImg } })
           .then(res => {
             if (res === null) {
               throw Error('Invalid res NULL')
+
             }
             return res
           })
-          .catch(err => console.log('EEEEEERRR', err))
+          .catch(async err => {
+            await Promise.all(
+              imgsFileNames
+                .map(
+                  async (file: string) => {
+                    if (!file) {
+                      throw Error('No file Name')
+                    }
+                    fs.unlink(path.join(__dirname, '../../uploads/' + file), (err) => {
+                      if (err) console.log(err)
+                    })
+                  }
+                )
+            )
+            console.log('EEEEEERRR', err)
+          })
       }
     })
 
@@ -81,11 +97,13 @@ export const Mutation = objectType({
           await Promise.all(
             imgsFileNames
               .map(
-                async (file: string, ind: number) => {
+                async (file: string) => {
                   if (!file) {
                     throw Error('No file Name')
                   }
-                  fs.unlinkSync(path.join(__dirname, '../../uploads/' + file))
+                  fs.unlink(path.join(__dirname, '../../uploads/' + file), (err) => {
+                    if (err) console.log(err)
+                  })
                 }
               )
           )
