@@ -12,8 +12,32 @@ export const Mutation = objectType({
     t.crud.deleteOneCategory()
 
     t.crud.createOneProduct({ alias: '_createOneProduct' })
-    t.crud.updateOneProduct()
+    t.crud.updateOneProduct({ alias: '_updateOneProduct' })
     t.crud.deleteOneProduct({ alias: '_deleteOneProduct' })
+
+    //   _updateOneProduct(
+    //     data: ProductUpdateInput!
+    //   where: ProductWhereUniqueInput!
+    // ): Product
+
+    t.field('updateOneProduct', {
+      type: 'Product',
+      args: {
+        data: arg({ type: 'ProductUpdateInput', required: true }),
+        where: arg({ type: 'ProductWhereUniqueInput', required: true }),
+        files: arg({ type: 'Upload', list: true, nullable: true }),
+        payload: arg({ type: 'String', nullable: true })
+      },
+      // @ts-ignores
+      resolve: async (parent, args, ctx) => {
+
+        const product = await ctx.prisma.product.update({
+          // @ts-ignore
+          where: { ...args.where}, data: {...args.data}
+        })
+        return product
+      }
+    })
 
     t.field('createOneProduct', {
       type: 'Product',

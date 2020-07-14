@@ -12,7 +12,7 @@ import { nexusSchemaPrisma } from 'nexus-plugin-prisma/schema'
 // import { addCrudResolvers } from '@ra-data-prisma/backend/'
 
 export const schema = makeSchema({
-  types: [Query, Mutation, Product, Category, ImageProd, ImageCat, Upload, File],
+  types: [Query, Mutation, Product, Category, ImageCat, Upload, File],
   plugins: [nexusSchemaPrisma({ experimentalCRUD: true }),
     // connectionPlugin()
   ],
