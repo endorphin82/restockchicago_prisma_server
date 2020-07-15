@@ -30,10 +30,10 @@ export const Mutation = objectType({
       },
       // @ts-ignores
       resolve: async (parent, args, ctx) => {
-
+        const { where, data } = args
         const product = await ctx.prisma.product.update({
           // @ts-ignore
-          where: { ...args.where}, data: {...args.data}
+          where, data
         })
         return product
       }
