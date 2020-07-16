@@ -3,6 +3,8 @@ import { Upload } from './Upload'
 
 import path from 'path'
 import fs from 'fs'
+import { deserialize } from 'v8'
+import { deleteImagesByFilenames, writeImages } from '../utils'
 
 export const Mutation = objectType({
   name: 'Mutation',
@@ -15,25 +17,41 @@ export const Mutation = objectType({
     t.crud.updateOneProduct({ alias: '_updateOneProduct' })
     t.crud.deleteOneProduct({ alias: '_deleteOneProduct' })
 
-    //   _updateOneProduct(
-    //     data: ProductUpdateInput!
-    //   where: ProductWhereUniqueInput!
-    // ): Product
-
     t.field('updateOneProduct', {
       type: 'Product',
       args: {
         data: arg({ type: 'ProductUpdateInput', required: true }),
         where: arg({ type: 'ProductWhereUniqueInput', required: true }),
         files: arg({ type: 'Upload', list: true, nullable: true }),
-        payload: arg({ type: 'String', nullable: true })
+        payloadEditProduct: arg({ type: 'String', nullable: true })
       },
       // @ts-ignores
       resolve: async (parent, args, ctx) => {
-        const { where, data } = args
+        const { where, data, files, payloadEditProduct } = await args
+        const unsrlzPayload = JSON.parse(payloadEditProduct ? payloadEditProduct : '')
+        const unsrlzImgs = unsrlzPayload?.img || []
+        const unsrlzDelImgs = unsrlzPayload?.del || []
+        console.log('unsrlzDelImgs', unsrlzDelImgs)
+        console.log('unsrlzImgs', unsrlzImgs)
+        // @ts-ignore
+
+       const imgs = await writeImages(files, unsrlzImgs.length)
+        // @ts-ignore
+        // const allImages = []
+        console.log('imgs+++', imgs)
+        await deleteImagesByFilenames(unsrlzDelImgs)
+        const allImages = [...unsrlzImgs, ...imgs]
+        // @ts-ignore
+        console.log('allImages', allImages)
+        const dataWitchImg = {
+          ...data,
+          // @ts-ignore
+          ...((allImages.length == 0) ? {} : { img: JSON.stringify(allImages) })
+        }
+
         const product = await ctx.prisma.product.update({
           // @ts-ignore
-          where, data
+          where, data: { ...dataWitchImg }
         })
         return product
       }
@@ -48,56 +66,26 @@ export const Mutation = objectType({
       // @ts-ignores
       resolve: async (parent, args, ctx) => {
         const { data, files } = args
+        const imgs = await writeImages(files)
 
-        const imgs = await Promise.all(
-          files ?
-            files
-              .map(
-                async (file, ind) => {
-                  const { createReadStream, filename, mimetype } = await file
-                  if (!filename) {
-                    throw Error('Invalid file Stream')
-                  } else if (filename && mimetype.startsWith('image')) {
-                    const readStream = createReadStream(filename)
-                    const pos = ind
-                    const name = `${String(Date.now())}${filename}`
-                    readStream
-                      .pipe(fs.createWriteStream(path.join(__dirname, '../../uploads/', name)))
-                      .on('close', () => {
-                      })
-                    return { pos, name }
-                  }
-                }
-              ) : []
-        )
+        console.log('imgs', imgs)
         const dataWitchImg = {
           ...data,
+          // @ts-ignore
           ...((imgs.length == 0) ? {} : { img: JSON.stringify(imgs) })
         }
+        // @ts-ignore
         const imgsFileNames = imgs.map((i: any) => i['name'])
         // @ts-ignore
         return ctx.prisma.product.create({ data: { ...dataWitchImg } })
           .then(res => {
             if (res === null) {
               throw Error('Invalid res NULL')
-
             }
             return res
           })
           .catch(async err => {
-            await Promise.all(
-              imgsFileNames
-                .map(
-                  async (file: string) => {
-                    if (!file) {
-                      throw Error('No file Name')
-                    }
-                    fs.unlink(path.join(__dirname, '../../uploads/' + file), (err) => {
-                      if (err) console.log(err)
-                    })
-                  }
-                )
-            )
+            await deleteImagesByFilenames(imgsFileNames)
             console.log('EEEEEERRR', err)
           })
       }
@@ -118,19 +106,7 @@ export const Mutation = objectType({
         const imgs = JSON.parse(prod.img)
         if (imgs) {
           const imgsFileNames = imgs.map((i: any) => i['name'])
-          await Promise.all(
-            imgsFileNames
-              .map(
-                async (file: string) => {
-                  if (!file) {
-                    throw Error('No file Name')
-                  }
-                  fs.unlink(path.join(__dirname, '../../uploads/' + file), (err) => {
-                    if (err) console.log(err)
-                  })
-                }
-              )
-          )
+          await deleteImagesByFilenames(imgsFileNames)
         } else
           console.log('imgsFileNames---')
         return prod
