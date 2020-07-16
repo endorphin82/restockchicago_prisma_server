@@ -549,7 +549,7 @@ export interface NexusGenArgTypes {
     updateOneProduct: { // args
       data: NexusGenInputs['ProductUpdateInput']; // ProductUpdateInput!
       files?: any[] | null; // [Upload!]
-      payload?: string | null; // String
+      payloadEditProduct?: string | null; // String
       where: NexusGenInputs['ProductWhereUniqueInput']; // ProductWhereUniqueInput!
     }
   }
