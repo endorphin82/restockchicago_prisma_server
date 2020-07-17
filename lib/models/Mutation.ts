@@ -28,16 +28,13 @@ export const Mutation = objectType({
       // @ts-ignores
       resolve: async (parent, args, ctx) => {
         const { where, data, files, payloadEditProduct } = await args
-        const unsrlzPayload = JSON.parse(payloadEditProduct ? payloadEditProduct : '')
+        const unsrlzPayload = JSON.parse(payloadEditProduct ? payloadEditProduct : '{}')
+        console.log('unsrlzPayload', unsrlzPayload)
         const unsrlzImgs = unsrlzPayload?.img || []
         const unsrlzDelImgs = unsrlzPayload?.del || []
         console.log('unsrlzDelImgs', unsrlzDelImgs)
         console.log('unsrlzImgs', unsrlzImgs)
-        // @ts-ignore
-
-       const imgs = await writeImages(files, unsrlzImgs.length)
-        // @ts-ignore
-        // const allImages = []
+        const imgs = await writeImages(files, unsrlzImgs.length)
         console.log('imgs+++', imgs)
         await deleteImagesByFilenames(unsrlzDelImgs)
         const allImages = [...unsrlzImgs, ...imgs]
@@ -48,7 +45,6 @@ export const Mutation = objectType({
           // @ts-ignore
           ...((allImages.length == 0) ? {} : { img: JSON.stringify(allImages) })
         }
-
         const product = await ctx.prisma.product.update({
           // @ts-ignore
           where, data: { ...dataWitchImg }
