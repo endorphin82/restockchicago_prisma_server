@@ -43,7 +43,7 @@ export const Mutation = objectType({
         const dataWitchImg = {
           ...data,
           // @ts-ignore
-          ...((allImages.length == 0) ? {} : { img: JSON.stringify(allImages) })
+          ...((allImages.length == 0) ? { img: '' } : { img: JSON.stringify(allImages) })
         }
         const product = await ctx.prisma.product.update({
           // @ts-ignore
