@@ -45,10 +45,13 @@ export const Mutation = objectType({
           // @ts-ignore
           ...((allImages.length == 0) ? { img: '' } : { img: JSON.stringify(allImages) })
         }
-        const product = await ctx.prisma.product.update({
+        const product = ctx.prisma.product.update({
           // @ts-ignore
           where, data: { ...dataWitchImg }
-        })
+        }).then(res => res)
+          .catch(() => {
+            deleteImagesByFilenames(imgs.map((i: any) => i.name))
+          })
         return product
       }
     })
