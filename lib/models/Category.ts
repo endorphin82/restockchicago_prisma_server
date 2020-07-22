@@ -10,6 +10,6 @@ export const Category = objectType({
     t.model.description()
     t.model.products()
     t.model.icon()
-    t.model.images()
+    t.model.img()
   }
 })
