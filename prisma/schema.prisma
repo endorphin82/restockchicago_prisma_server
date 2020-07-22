@@ -14,7 +14,7 @@ model Category {
   name        String     @unique
   parent      Int?
   url         String     @unique
-  images      ImageCat[]
+  img         String?
   products    Product[]  @relation(references: [id])
 }
 

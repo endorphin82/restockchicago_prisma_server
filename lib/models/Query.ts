@@ -164,51 +164,6 @@ export const Query = objectType({
       }
     })
 
-    // t.field('pBNACIds', {
-    //   type: 'Product',
-    //   list: true,
-    //   args: {
-    //     name: stringArg({ required: true }),
-    //     category_ids: intArg({ required: false, list: true })
-    //   },
-    //   // @ts-ignore
-    //   resolve: async (_root, args, ctx) => {
-    //     const { category_ids, name } = args
-    //     if (category_ids?.length == 0 || !category_ids) {
-    //       const prods = await ctx.prisma
-    //         .product
-    //         .findMany({
-    //           where: {
-    //             name: { contains: String(name) }
-    //             // categories: Number(args.category_id)
-    //           },
-    //           orderBy: { id: 'desc' }
-    //         })
-    //       return prods
-    //     } else {
-    //       const arr = await ctx.prisma
-    //         .category
-    //         .findMany({
-    //           where: {
-    //             // @ts-ignore
-    //             AND: [category_ids.map(c => ({ id: Number(c) }))]
-    //           }
-    //         }).products({
-    //           where: {
-    //             name: { contains: String(name) }
-    //           },
-    //           orderBy: { id: 'desc' }
-    //         })
-    //       return arr
-    //     }
-    //     // const prods = arr.reduce(function(a: any, b: any) {
-    //     //   return a.concat(b)
-    //     // })
-    //
-    //
-    //   }
-    // })
-
     t.field('productsByCategoryId', {
       type: 'Product',
       list: true,
