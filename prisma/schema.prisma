@@ -9,7 +9,7 @@ datasource db {
 
 model Category {
   description String?
-  icon        String
+  icon        String?
   id          Int        @default(autoincrement()) @id
   name        String     @unique
   parent      Int?       @default(0)
