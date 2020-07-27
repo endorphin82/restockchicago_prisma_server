@@ -16,25 +16,7 @@ export const Query = objectType({
   ): [Product!]!
     */
     // return ctx.prisma.queryRaw('SELECT AUTO_INCREMENT FROM information_schema.TABLES WHERE TABLE_SCHEMA = "restockchicago" AND TABLE_NAME = "Product";')
-    /*
-        t.list.field('products', {
-          type: 'Product',
-          args: {
-            first: intArg({ required: false }),
-            last: intArg(),
-            before: arg({ type: 'ProductWhereUniqueInput' }),
-            after: arg({ type: 'ProductWhereUniqueInput' })
-          },
-          async resolve(parent, args, ctx) {
-            const { first, last, before, after } = await args
-            const products = await ctx.prisma.product.findMany({
-              // @ts-ignore
-              first, last, before, after
-            })
-            return products
-          }
-        })
-    */
+
     t.field('productByName', {
       type: 'Product',
       args: {

@@ -30,7 +30,6 @@ export interface NexusGenInputs {
   CategoryCreateInput: { // input type
     description?: string | null; // String
     icon?: string | null; // String
-    ImageCat?: NexusGenInputs['ImageCatCreateManyWithoutCategoryInput'] | null; // ImageCatCreateManyWithoutCategoryInput
     img?: string | null; // String
     name: string; // String!
     parent?: number | null; // Int
@@ -44,7 +43,6 @@ export interface NexusGenInputs {
   CategoryCreateWithoutProductsInput: { // input type
     description?: string | null; // String
     icon?: string | null; // String
-    ImageCat?: NexusGenInputs['ImageCatCreateManyWithoutCategoryInput'] | null; // ImageCatCreateManyWithoutCategoryInput
     img?: string | null; // String
     name: string; // String!
     parent?: number | null; // Int
@@ -60,7 +58,6 @@ export interface NexusGenInputs {
     description?: NexusGenInputs['NullableStringFilter'] | null; // NullableStringFilter
     icon?: NexusGenInputs['NullableStringFilter'] | null; // NullableStringFilter
     id?: NexusGenInputs['IntFilter'] | null; // IntFilter
-    ImageCat?: NexusGenInputs['ImageCatFilter'] | null; // ImageCatFilter
     img?: NexusGenInputs['NullableStringFilter'] | null; // NullableStringFilter
     name?: NexusGenInputs['StringFilter'] | null; // StringFilter
     NOT?: NexusGenInputs['CategoryScalarWhereInput'][] | null; // [CategoryScalarWhereInput!]
@@ -73,7 +70,6 @@ export interface NexusGenInputs {
     description?: string | null; // String
     icon?: string | null; // String
     id?: number | null; // Int
-    ImageCat?: NexusGenInputs['ImageCatUpdateManyWithoutCategoryInput'] | null; // ImageCatUpdateManyWithoutCategoryInput
     img?: string | null; // String
     name?: string | null; // String
     parent?: number | null; // Int
@@ -112,7 +108,6 @@ export interface NexusGenInputs {
     description?: string | null; // String
     icon?: string | null; // String
     id?: number | null; // Int
-    ImageCat?: NexusGenInputs['ImageCatUpdateManyWithoutCategoryInput'] | null; // ImageCatUpdateManyWithoutCategoryInput
     img?: string | null; // String
     name?: string | null; // String
     parent?: number | null; // Int
@@ -128,7 +123,6 @@ export interface NexusGenInputs {
     description?: NexusGenInputs['NullableStringFilter'] | null; // NullableStringFilter
     icon?: NexusGenInputs['NullableStringFilter'] | null; // NullableStringFilter
     id?: NexusGenInputs['IntFilter'] | null; // IntFilter
-    ImageCat?: NexusGenInputs['ImageCatFilter'] | null; // ImageCatFilter
     img?: NexusGenInputs['NullableStringFilter'] | null; // NullableStringFilter
     name?: NexusGenInputs['StringFilter'] | null; // StringFilter
     NOT?: NexusGenInputs['CategoryWhereInput'][] | null; // [CategoryWhereInput!]
@@ -141,71 +135,6 @@ export interface NexusGenInputs {
     id?: number | null; // Int
     name?: string | null; // String
     url?: string | null; // String
-  }
-  ImageCatCreateManyWithoutCategoryInput: { // input type
-    connect?: NexusGenInputs['ImageCatWhereUniqueInput'][] | null; // [ImageCatWhereUniqueInput!]
-    create?: NexusGenInputs['ImageCatCreateWithoutCategoryInput'][] | null; // [ImageCatCreateWithoutCategoryInput!]
-  }
-  ImageCatCreateWithoutCategoryInput: { // input type
-    url: string; // String!
-  }
-  ImageCatFilter: { // input type
-    every?: NexusGenInputs['ImageCatWhereInput'] | null; // ImageCatWhereInput
-    none?: NexusGenInputs['ImageCatWhereInput'] | null; // ImageCatWhereInput
-    some?: NexusGenInputs['ImageCatWhereInput'] | null; // ImageCatWhereInput
-  }
-  ImageCatScalarWhereInput: { // input type
-    AND?: NexusGenInputs['ImageCatScalarWhereInput'][] | null; // [ImageCatScalarWhereInput!]
-    category_id?: NexusGenInputs['NullableIntFilter'] | null; // NullableIntFilter
-    id?: NexusGenInputs['IntFilter'] | null; // IntFilter
-    NOT?: NexusGenInputs['ImageCatScalarWhereInput'][] | null; // [ImageCatScalarWhereInput!]
-    OR?: NexusGenInputs['ImageCatScalarWhereInput'][] | null; // [ImageCatScalarWhereInput!]
-    url?: NexusGenInputs['StringFilter'] | null; // StringFilter
-  }
-  ImageCatUpdateManyDataInput: { // input type
-    id?: number | null; // Int
-    url?: string | null; // String
-  }
-  ImageCatUpdateManyWithWhereNestedInput: { // input type
-    data: NexusGenInputs['ImageCatUpdateManyDataInput']; // ImageCatUpdateManyDataInput!
-    where: NexusGenInputs['ImageCatScalarWhereInput']; // ImageCatScalarWhereInput!
-  }
-  ImageCatUpdateManyWithoutCategoryInput: { // input type
-    connect?: NexusGenInputs['ImageCatWhereUniqueInput'][] | null; // [ImageCatWhereUniqueInput!]
-    create?: NexusGenInputs['ImageCatCreateWithoutCategoryInput'][] | null; // [ImageCatCreateWithoutCategoryInput!]
-    delete?: NexusGenInputs['ImageCatWhereUniqueInput'][] | null; // [ImageCatWhereUniqueInput!]
-    deleteMany?: NexusGenInputs['ImageCatScalarWhereInput'][] | null; // [ImageCatScalarWhereInput!]
-    disconnect?: NexusGenInputs['ImageCatWhereUniqueInput'][] | null; // [ImageCatWhereUniqueInput!]
-    set?: NexusGenInputs['ImageCatWhereUniqueInput'][] | null; // [ImageCatWhereUniqueInput!]
-    update?: NexusGenInputs['ImageCatUpdateWithWhereUniqueWithoutCategoryInput'][] | null; // [ImageCatUpdateWithWhereUniqueWithoutCategoryInput!]
-    updateMany?: NexusGenInputs['ImageCatUpdateManyWithWhereNestedInput'][] | null; // [ImageCatUpdateManyWithWhereNestedInput!]
-    upsert?: NexusGenInputs['ImageCatUpsertWithWhereUniqueWithoutCategoryInput'][] | null; // [ImageCatUpsertWithWhereUniqueWithoutCategoryInput!]
-  }
-  ImageCatUpdateWithWhereUniqueWithoutCategoryInput: { // input type
-    data: NexusGenInputs['ImageCatUpdateWithoutCategoryDataInput']; // ImageCatUpdateWithoutCategoryDataInput!
-    where: NexusGenInputs['ImageCatWhereUniqueInput']; // ImageCatWhereUniqueInput!
-  }
-  ImageCatUpdateWithoutCategoryDataInput: { // input type
-    id?: number | null; // Int
-    url?: string | null; // String
-  }
-  ImageCatUpsertWithWhereUniqueWithoutCategoryInput: { // input type
-    create: NexusGenInputs['ImageCatCreateWithoutCategoryInput']; // ImageCatCreateWithoutCategoryInput!
-    update: NexusGenInputs['ImageCatUpdateWithoutCategoryDataInput']; // ImageCatUpdateWithoutCategoryDataInput!
-    where: NexusGenInputs['ImageCatWhereUniqueInput']; // ImageCatWhereUniqueInput!
-  }
-  ImageCatWhereInput: { // input type
-    AND?: NexusGenInputs['ImageCatWhereInput'][] | null; // [ImageCatWhereInput!]
-    category?: NexusGenInputs['CategoryWhereInput'] | null; // CategoryWhereInput
-    category_id?: NexusGenInputs['NullableIntFilter'] | null; // NullableIntFilter
-    id?: NexusGenInputs['IntFilter'] | null; // IntFilter
-    NOT?: NexusGenInputs['ImageCatWhereInput'][] | null; // [ImageCatWhereInput!]
-    OR?: NexusGenInputs['ImageCatWhereInput'][] | null; // [ImageCatWhereInput!]
-    url?: NexusGenInputs['StringFilter'] | null; // StringFilter
-  }
-  ImageCatWhereUniqueInput: { // input type
-    category_id?: number | null; // Int
-    id?: number | null; // Int
   }
   IntFilter: { // input type
     equals?: number | null; // Int
@@ -417,18 +346,6 @@ export interface NexusGenAllTypes extends NexusGenRootTypes {
   CategoryUpsertWithWhereUniqueWithoutProductsInput: NexusGenInputs['CategoryUpsertWithWhereUniqueWithoutProductsInput'];
   CategoryWhereInput: NexusGenInputs['CategoryWhereInput'];
   CategoryWhereUniqueInput: NexusGenInputs['CategoryWhereUniqueInput'];
-  ImageCatCreateManyWithoutCategoryInput: NexusGenInputs['ImageCatCreateManyWithoutCategoryInput'];
-  ImageCatCreateWithoutCategoryInput: NexusGenInputs['ImageCatCreateWithoutCategoryInput'];
-  ImageCatFilter: NexusGenInputs['ImageCatFilter'];
-  ImageCatScalarWhereInput: NexusGenInputs['ImageCatScalarWhereInput'];
-  ImageCatUpdateManyDataInput: NexusGenInputs['ImageCatUpdateManyDataInput'];
-  ImageCatUpdateManyWithWhereNestedInput: NexusGenInputs['ImageCatUpdateManyWithWhereNestedInput'];
-  ImageCatUpdateManyWithoutCategoryInput: NexusGenInputs['ImageCatUpdateManyWithoutCategoryInput'];
-  ImageCatUpdateWithWhereUniqueWithoutCategoryInput: NexusGenInputs['ImageCatUpdateWithWhereUniqueWithoutCategoryInput'];
-  ImageCatUpdateWithoutCategoryDataInput: NexusGenInputs['ImageCatUpdateWithoutCategoryDataInput'];
-  ImageCatUpsertWithWhereUniqueWithoutCategoryInput: NexusGenInputs['ImageCatUpsertWithWhereUniqueWithoutCategoryInput'];
-  ImageCatWhereInput: NexusGenInputs['ImageCatWhereInput'];
-  ImageCatWhereUniqueInput: NexusGenInputs['ImageCatWhereUniqueInput'];
   IntFilter: NexusGenInputs['IntFilter'];
   NullableIntFilter: NexusGenInputs['NullableIntFilter'];
   NullableStringFilter: NexusGenInputs['NullableStringFilter'];
@@ -614,7 +531,7 @@ export interface NexusGenInheritedFields {}
 
 export type NexusGenObjectNames = "Category" | "File" | "Mutation" | "Product" | "Query";
 
-export type NexusGenInputNames = "CategoryCreateInput" | "CategoryCreateManyWithoutProductsInput" | "CategoryCreateWithoutProductsInput" | "CategoryFilter" | "CategoryScalarWhereInput" | "CategoryUpdateInput" | "CategoryUpdateManyDataInput" | "CategoryUpdateManyWithWhereNestedInput" | "CategoryUpdateManyWithoutProductsInput" | "CategoryUpdateWithWhereUniqueWithoutProductsInput" | "CategoryUpdateWithoutProductsDataInput" | "CategoryUpsertWithWhereUniqueWithoutProductsInput" | "CategoryWhereInput" | "CategoryWhereUniqueInput" | "ImageCatCreateManyWithoutCategoryInput" | "ImageCatCreateWithoutCategoryInput" | "ImageCatFilter" | "ImageCatScalarWhereInput" | "ImageCatUpdateManyDataInput" | "ImageCatUpdateManyWithWhereNestedInput" | "ImageCatUpdateManyWithoutCategoryInput" | "ImageCatUpdateWithWhereUniqueWithoutCategoryInput" | "ImageCatUpdateWithoutCategoryDataInput" | "ImageCatUpsertWithWhereUniqueWithoutCategoryInput" | "ImageCatWhereInput" | "ImageCatWhereUniqueInput" | "IntFilter" | "NullableIntFilter" | "NullableStringFilter" | "ProductCreateInput" | "ProductCreateManyWithoutCategoriesInput" | "ProductCreateWithoutCategoriesInput" | "ProductFilter" | "ProductScalarWhereInput" | "ProductUpdateInput" | "ProductUpdateManyDataInput" | "ProductUpdateManyWithWhereNestedInput" | "ProductUpdateManyWithoutCategoriesInput" | "ProductUpdateWithWhereUniqueWithoutCategoriesInput" | "ProductUpdateWithoutCategoriesDataInput" | "ProductUpsertWithWhereUniqueWithoutCategoriesInput" | "ProductWhereInput" | "ProductWhereUniqueInput" | "StringFilter";
+export type NexusGenInputNames = "CategoryCreateInput" | "CategoryCreateManyWithoutProductsInput" | "CategoryCreateWithoutProductsInput" | "CategoryFilter" | "CategoryScalarWhereInput" | "CategoryUpdateInput" | "CategoryUpdateManyDataInput" | "CategoryUpdateManyWithWhereNestedInput" | "CategoryUpdateManyWithoutProductsInput" | "CategoryUpdateWithWhereUniqueWithoutProductsInput" | "CategoryUpdateWithoutProductsDataInput" | "CategoryUpsertWithWhereUniqueWithoutProductsInput" | "CategoryWhereInput" | "CategoryWhereUniqueInput" | "IntFilter" | "NullableIntFilter" | "NullableStringFilter" | "ProductCreateInput" | "ProductCreateManyWithoutCategoriesInput" | "ProductCreateWithoutCategoriesInput" | "ProductFilter" | "ProductScalarWhereInput" | "ProductUpdateInput" | "ProductUpdateManyDataInput" | "ProductUpdateManyWithWhereNestedInput" | "ProductUpdateManyWithoutCategoriesInput" | "ProductUpdateWithWhereUniqueWithoutCategoriesInput" | "ProductUpdateWithoutCategoriesDataInput" | "ProductUpsertWithWhereUniqueWithoutCategoriesInput" | "ProductWhereInput" | "ProductWhereUniqueInput" | "StringFilter";
 
 export type NexusGenEnumNames = never;
 
