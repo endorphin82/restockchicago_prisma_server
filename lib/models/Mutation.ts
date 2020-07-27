@@ -96,7 +96,7 @@ export const Mutation = objectType({
       },
       // @ts-ignores
       resolve: async (parent, { where }, ctx) => {
-        console.log('del---------')
+        console.log('del---------', where)
         // @ts-ignore
         const categ = await ctx.prisma.category.delete({ where })
         console.log('del++++++')
